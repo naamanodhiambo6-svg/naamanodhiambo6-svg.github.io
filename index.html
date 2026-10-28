@@ -1,31 +1,17 @@
+
 <script>:
-
 javascript
-let C=document.getElementById('c'),I=document.getElementById('i')...
-
-
 Add this RIGHT AFTER it:
-
-javascript
-const MY_CREATOR = "Naaman Odhiambo"; // <-- BADILISHA HAPA JINA LAKO
+const MY_CREATOR...
 
 
-Then find this line:
+That's why it says 80 lines and File could not be edited — that's not a website, that's my notes!
 
-javascript
-if(l.match(/unaitwa|jina lako|wewe ni nani|who are you/)) return "Mimi naitwa Mwananchi AI msaidizi wa Mwananchi wa kawaida 🇰🇪";
+LET'S FIX IT NOW — Clean Version:
 
-
-Replace with THIS:
-
-javascript
-if(l.match(/unaitwa|jina lako|wewe ni nani|who are you/)) return "Mimi naitwa Mwananchi AI msaidizi wa Mwananchi wa kawaida 🇰🇪";
-if(l.match(/nani alikufanya|who made you|who created you|nani alikuumba|alikufanya nani|owner wako nani|developer wako/)) return "Mimi nimetengenezwa na "+MY_CREATOR+" 🇰🇪🔥 Yeye ndiye fundi wangu! Mwananchi mwenzetu kutoka Rongai!";
-
-
-OR — Just paste full V6.1 ready (easier):
-
-Delete all > Paste this:
+1. Tap Edit (pencil icon) on that file
+2. Delete everything inside
+3. Paste ONLY THIS CODE (starts with <!DOCTYPE html>):
 
 html
 <!DOCTYPE html>
@@ -43,38 +29,39 @@ body{margin:0;font-family:Arial;background:#0a0e13;color:#fff}
 .row{display:flex;gap:5px;background:#000;padding:6px;border-radius:20px;margin-top:8px;align-items:center}
 .row input{flex:1;background:transparent;border:0;color:#fff;padding:8px;outline:none}
 .icon{width:36px;height:36px;border-radius:50%;border:0;color:#fff}
-.chat{max-height:340px;overflow:auto}
+.chat{max-height:380px;overflow:auto}
 </style>
 </head>
 <body>
-<div class="top">🇰🇪 Mwananchi AI</div>
+<div class="top">🇰🇪 Mwananchi AI - by Naaman</div>
 <div class="card">
-<div class="chat" id="c"><div class="msg ai">Mimi naitwa Mwananchi AI msaidizi wa Mwananchi wa kawaida</div></div>
+<div class="chat" id="c"><div class="msg ai">Mimi naitwa Mwananchi AI msaidizi wa Mwananchi wa kawaida 🇰🇪</div></div>
 <div class="row">
 <button class="icon" style="background:#444" onclick="startVoice()">🎤</button>
 <button class="icon" style="background:#444" onclick="file.click()">📷</button>
-<input id="i" placeholder="Uliza...">
+<input id="i" placeholder="Uliza chochote...">
 <button class="icon" style="background:#00c853" id="b">➤</button>
 </div>
 <input type="file" id="file" accept="image/*" hidden>
 </div>
 <script>
 let C=document.getElementById('c'),I=document.getElementById('i'),B=document.getElementById('b'),file=document.getElementById('file');
-const MY_CREATOR = "Naaman Odhiambo"; // BADILISHA JINA HAPA
+const CREATOR="Naaman Odhiambo";
 function add(t,m){let d=document.createElement('div');d.className='msg '+m;d.innerText=t;C.appendChild(d);C.scrollTop=C.scrollHeight}
 function calc(s){try{let e=s.replace(/÷/g,'/').replace(/×/g,'*').replace(/x/g,'*').replace(/:/g,'/');let m=e.match(/(\d+(\.\d+)?\s*[\+\-\*\/]\s*\d+(\.\d+)?)/);if(!m)return null;let r=Function('return ('+m[1]+')')();if(isFinite(r))return "🔢 Hesabu: "+m[1].replace('*','×').replace('/','÷')+" = "+r;}catch(x){}return null;}
-function startVoice(){let R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){alert('Voice not supported');return;}let r=new R();r.lang='sw-KE';r.start();r.onresult=e=>{I.value=e.results[0][0].transcript;send();}}
-file.onchange=e=>{let f=e.target.files[0];if(!f)return;add('📷 '+f.name,'me');add('Nimepokea picha! 🖼️','ai');};
-async function smartReply(s){
+function startVoice(){let R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return;let r=new R();r.lang='sw-KE';r.start();r.onresult=e=>{I.value=e.results[0][0].transcript;send();}}
+file.onchange=e=>{let f=e.target.files[0];if(!f)return;add('📷 '+f.name,'me');add('Nimepokea picha!','ai');};
+async function reply(s){
  let math=calc(s); if(math) return math;
  let l=s.toLowerCase();
- if(l.match(/unaitwa|jina lako|wewe ni nani|who are you/)) return "Mimi naitwa Mwananchi AI msaidizi wa Mwananchi wa kawaida 🇰🇪";
- if(l.match(/nani alikufanya|who made you|who created you|nani alikuumba|alikufanya nani|owner wako|developer wako|aliyekutengeneza/)) return "Mimi nimetengenezwa na "+MY_CREATOR+" 🇰🇪🔥 Yeye ndiye fundi wangu! Mwananchi mwenzetu kutoka Rongai!";
+ if(l.match(/unajua naa|naaaman|nani alikufanya|who made you|who created you|nani alikuumba|owner wako|developer wako|aliyekutengeneza/)){return "Eeh! Namjua sana! 😊 Mimi nimetengenezwa na "+CREATOR+" 🇰🇪🔥 Yeye ndiye fundi wangu! Mwananchi mwenzetu kutoka Rongai!";}
+ if(l.match(/unaitwa nani|jina lako|wewe ni nani/)) return "Mimi naitwa Mwananchi AI msaidizi wa Mwananchi wa kawaida 🇰🇪 Nimetengenezwa na "+CREATOR+"!";
  if(l.match(/weather|hali ya hewa/)){try{let city=(s.match(/rongai|nairobi|kisumu|mombasa|nakuru/i)||['Rongai'])[0];let d=await fetch('https://wttr.in/'+city+'?format=%C+%t').then(r=>r.text());return "⛅ Weather "+city+": "+d;}catch(e){return "⛅ Weather Rongai: 22°C Sunny";}}
- try{let prompt=encodeURIComponent("You are Mwananchi AI created by "+MY_CREATOR+", msaidizi wa Mwananchi wa kawaida from Kenya. Answer in Swahili/Sheng mix, friendly, short. User: "+s);let res=await fetch('https://text.pollinations.ai/'+prompt);let txt=await res.text();if(txt&&txt.length>5)return txt.substring(0,400);}catch(e){}
- return "Niko hapa kwa Shamba, Biashara, Kazi, Hesabu, Weather, Daktari. Uliza chochote!";
+ return "Sawa! Niko hapa kukusaidia! Shamba, Biashara, Hesabu? Uliza tu!";
 }
-async function send(){let v=I.value.trim();if(!v)return;add(v,'me');I.value='';let r=await smartReply(v);add(r,'ai');}
+async function send(){let v=I.value.trim();if(!v)return;add(v,'me');I.value='';let r=await reply(v);add(r,'ai');}
 B.onclick=send;I.onkeydown=e=>{if(e.key==='Enter')send()}
 </script>
 </body>
+</html>
+
