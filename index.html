@@ -3,13 +3,10 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mwananchi AI - Eldoret</title>
+<title>Mwananchi AI</title>
 <style>
 body{margin:0;font-family:Arial;background:#0a0e13;color:#fff}
 .top{background:linear-gradient(90deg,#00c853,#2962ff);padding:18px;text-align:center;font-size:20px;font-weight:800}
-.tabs{display:flex;gap:6px;overflow:auto;padding:10px}
-.tab{padding:8px 14px;border-radius:20px;background:#1e2a38;color:#fff;border:0;font-weight:600}
-.tab.active{background:#00c853}
 .card{background:#151a21;margin:10px;padding:12px;border-radius:12px;border:1px solid #263238}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .gbtn{padding:12px;border-radius:10px;border:0;font-weight:700;color:#fff}
@@ -19,19 +16,11 @@ body{margin:0;font-family:Arial;background:#0a0e13;color:#fff}
 .row{display:flex;gap:6px;margin-top:10px;background:#000;padding:6px;border-radius:24px;align-items:center}
 .row input{flex:1;background:transparent;border:0;color:#fff;padding:8px 12px;outline:none}
 .send{width:40px;height:40px;border-radius:50%;background:#00c853;border:0;color:#fff;font-size:16px}
-.chat{max-height:300px;overflow:auto}
-.small{font-size:12px;color:#78909c}
+.chat{max-height:320px;overflow:auto}
 </style>
 </head>
 <body>
-<div class="top">🇰🇪 Mwananchi AI - Eldoret</div>
-<div class="tabs">
-<button class="tab active">🌱 Shamba</button>
-<button class="tab">💼 Biashara</button>
-<button class="tab">💻 Kazi</button>
-<button class="tab">🏥 Huduma</button>
-</div>
-
+<div class="top">🇰🇪 Mwananchi AI</div>
 <div class="card">
 <div class="grid">
 <button class="gbtn" style="background:#00c853" onclick="q('shamba')">🌱 Shamba</button>
@@ -39,42 +28,37 @@ body{margin:0;font-family:Arial;background:#0a0e13;color:#fff}
 <button class="gbtn" style="background:#ff6d00" onclick="q('kazi')">💻 Kazi</button>
 <button class="gbtn" style="background:#6200ea" onclick="q('huduma')">🏥 Huduma</button>
 </div>
-<p class="small" style="margin-top:8px">💡 KCSE Tip: Soma 2hrs asubuhi — akili fresh!</p>
 </div>
-
 <div class="card">
 <b>💬 Uliza Mwananchi AI <span style="color:#00e676">● Live</span></b>
-<div class="chat" id="msgs"><div class="msg ai">Habari! Mimi ni Mwananchi AI, msaidizi wako wa Eldoret. 🇰🇪 Uliza chochote — Shamba, Biashara, Kazi, Masomo!</div></div>
+<div class="chat" id="msgs"><div class="msg ai">Habari! Mimi ni Mwananchi AI, msaidizi wako. Uliza chochote — Shamba, Biashara, Kazi, Masomo!</div></div>
 <div class="row"><input id="in" placeholder="Andika hapa..."><button class="send" id="sb">➤</button></div>
 </div>
-
-<div class="card"><b>📊 Soko Live Eldoret</b><br><br>
+<div class="card"><b>📊 Soko Live</b><br><br>
 🥔 Viazi: Ksh 80/kg <span style="color:#00e676">↗</span><br>
-🌽 Mahindi: Ksh 65/kg<br>
-🍅 Nyanya: Ksh 120/kg <span style="color:#00e676">↗ +12%</span><br><br>
-<span class="small">Updated leo • Soko Kuu Eldoret</span>
+🌽 Mahindi/Maindi: Ksh 65/kg<br>
+🍅 Nyanya: Ksh 120/kg <span style="color:#00e676">↗ +12%</span><br>
 </div>
-
-<div style="text-align:center;padding:16px;color:#546e7a;font-size:11px">Built with ❤️ by Naaman Odhiambo | Eldoret 🇰🇪<br>© 2026 Mwananchi AI</div>
-
+<div style="text-align:center;padding:16px;color:#546e7a;font-size:11px">Built with ❤️ by Naaman Odhiambo<br>© 2026 Mwananchi AI</div>
 <script>
 let M=document.getElementById('msgs'),I=document.getElementById('in'),B=document.getElementById('sb');
 function add(t,c){let d=document.createElement('div');d.className='msg '+c;d.innerText=t;M.appendChild(d);M.scrollTop=M.scrollHeight}
-function q(t){let m={shamba:'Bei za shamba leo?',biashara:'Nipe idea ya biashara ya 10k',kazi:'Nataka kazi online',huduma:'NHIF ni pesa ngapi?'}[t];I.value=m;send()}
+function q(t){let m={shamba:'Bei za shamba leo?',biashara:'Nipe idea ya biashara ya 10k',kazi:'Nataka kazi online',huduma:'SHA ni pesa ngapi?'}[t];I.value=m;send()}
 function getReply(text){
  let l=text.toLowerCase();
- if(l.match(/uko aje|mambo|habari|poa|freshi|vipi/)) return "Poa sana! 😊 Niko fiti sana! Karibu sana kwa Mwananchi AI. Niko hapa kukusaidia na Shamba, Biashara, Kazi, Elimu. Uliza chochote!";
- if(l.match(/unaitwa nani|jina lako|wewe ni nani|who are you/)) return "Mimi ni Mwananchi AI 🇰🇪 — AI msaidizi wa mwananchi wa kawaida! Nimetengenezwa na Naaman Odhiambo kutoka Eldoret, kwa ajili ya Wakenya. Naeza kusaidia na Shamba, Biashara, Kazi, KCSE, na mengine!";
- if(l.match(/shamba|viazi|mahindi|nyanya|kilimo|mbolea|bei.*shamba|pesa ngapi.*shamba/)) return "🌱 Soko Leo Eldoret:\n🥔 Viazi: Ksh 80/kg\n🌽 Mahindi: Ksh 65/kg\n🍅 Nyanya: Ksh 120/kg\n\nTip: Panda viazi mwezi wa 3-4, tumia mbolea ya mboji na maji asubuhi. Unataka kujua kuhusu mazao gani?";
- if(l.match(/biashara|biz|pesa|idea|10k|20k|capital/)) return "💼 Biashara na 10k Eldoret:\n1) Mitumba online (TikTok) - buy 5k sell 10k\n2) Mayai & Kuku - 50 kuku = 30k/month\n3) Juice & Smootie kwa stage\n4) Boda spare shop\nUnapenda gani nikupe full plan + hesabu?";
- if(l.match(/kazi|job|online|ajira|work/)) return "💻 Kazi Online 2026:\n• Data Entry (Upwork) - $5/hr\n• Canva design kwa shops Eldoret\n• Transcription - $10/audio hr\n• Forex & Content writing\nUko na skill gani? Niku-guide!";
- if(l.match(/huduma|nhif|sha|id|kra|huduma/)) return "🏥 Huduma: \n• SHA/SHIF ilibadilisha NHIF - ni Ksh 300/month min\n• ID: Apply eCitizen\n• KRA PIN: iTax\nUnahitaji huduma gani exactly?";
- if(l.match(/kcse|masomo|shule|exam|soma/)) return "📚 KCSE Tip: Soma 2hrs asubuhi (4-6am) akili fresh! Fanya past papers 2022-2024. Lala 7hrs. Subject gani inakusumbua?";
- if(l.match(/asante|thanks|sawa|poa/)) return "Karibu sana bro! 😊 Niko hapa anytime. Uliza tena ukihitaji msaada!";
- return "Asante kwa swali! 🙏 Niko hapa kukusaidia na:\n🌱 Shamba & Soko prices\n💼 Biashara ideas\n💻 Kazi online\n🏥 Huduma (SHA, ID, KRA)\n📚 KCSE\n\nUliza tena kwa ufupi — mfano 'Bei ya viazi?' au 'Biashara ya 10k'";
+ if(l.match(/unaitwa nani|jina lako|wewe ni nani|who are you|unaitwa|naitwa nani/)) return "Mimi naitwa Mwananchi AI msaidizi wa Mwananchi wa kawaida 🇰🇪";
+ if(l.match(/uko aje|mambo|habari|poa|vipi/)) return "Poa sana! 😊 Niko fiti sana! Karibu sana kwa Mwananchi AI. Niko hapa kukusaidia.";
+ if(l.match(/maindi|mahindi|shamba|viazi|nyanya|kilimo|mbolea|bei|pesa ngapi/)) return "🌱 Soko Leo:\n🥔 Viazi: Ksh 80/kg\n🌽 Mahindi/Maindi: Ksh 65/kg\n🍅 Nyanya: Ksh 120/kg\n\nTip: Panda mahindi mwezi wa 3-4, tumia mbolea ya mboji.";
+ if(l.match(/biashara|biz|idea|10k|20k/)) return "💼 Biashara na 10k:\n1) Mitumba online (TikTok) - buy 5k sell 10k\n2) Mayai & Kuku - 50 kuku = 30k/month\n3) Juice & Smootie\nUnapenda gani nikupe full plan?";
+ if(l.match(/kazi|job|online|ajira/)) return "💻 Kazi Online 2026:\n• Data Entry (Upwork) - $5/hr\n• Canva design\n• Transcription - $10/hr";
+ if(l.match(/huduma|nhif|sha|id|kra/)) return "🏥 Huduma:\n• SHA/SHIF ni Ksh 300/month min\n• ID: Apply eCitizen";
+ if(l.match(/kcse|masomo|shule|exam/)) return "📚 KCSE Tip: Soma 2hrs asubuhi (4-6am) akili fresh! Subject gani?";
+ if(l.match(/asante|thanks|sawa/)) return "Karibu sana bro! 😊 Niko hapa anytime.";
+ return "Asante! 🙏 Niko hapa kwa:\n🌱 Shamba & Soko\n💼 Biashara\n💻 Kazi\nUliza kama 'Bei ya maindi?'";
 }
-function send(){let v=I.value.trim();if(!v)return;add(v,'me');I.value='';setTimeout(()=>{add(getReply(v),'ai')},500)}
+function send(){let v=I.value.trim();if(!v)return;add(v,'me');I.value='';setTimeout(()=>{add(getReply(v),'ai')},400)}
 B.onclick=send;I.onkeydown=e=>{if(e.key==='Enter')send()}
 </script>
 </body>
 </html>
+
