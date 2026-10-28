@@ -10,7 +10,7 @@ body{margin:0;font-family:Arial;background:#0a0e13;color:#fff}
 .card{background:#151a21;margin:10px;padding:12px;border-radius:12px;border:1px solid #263238}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .gbtn{padding:12px;border-radius:10px;border:0;font-weight:700;color:#fff}
-.msg{margin:7px 0;padding:10px 12px;border-radius:14px;font-size:14px;max-width:82%;line-height:1.4}
+.msg{margin:7px 0;padding:10px 12px;border-radius:14px;font-size:14px;max-width:82%;line-height:1.4;white-space:pre-line}
 .me{background:#2962ff;margin-left:auto}
 .ai{background:#232e35}
 .row{display:flex;gap:6px;margin-top:10px;background:#000;padding:6px;border-radius:24px;align-items:center}
@@ -31,34 +31,40 @@ body{margin:0;font-family:Arial;background:#0a0e13;color:#fff}
 </div>
 <div class="card">
 <b>💬 Uliza Mwananchi AI <span style="color:#00e676">● Live</span></b>
-<div class="chat" id="msgs"><div class="msg ai">Habari! Mimi ni Mwananchi AI, msaidizi wako. Uliza chochote — Shamba, Biashara, Kazi, Masomo!</div></div>
+<div class="chat" id="msgs"><div class="msg ai">Habari! Mimi naitwa Mwananchi AI msaidizi wa Mwananchi wa kawaida 🇰🇪 Uliza chochote!</div></div>
 <div class="row"><input id="in" placeholder="Andika hapa..."><button class="send" id="sb">➤</button></div>
 </div>
 <div class="card"><b>📊 Soko Live</b><br><br>
-🥔 Viazi: Ksh 80/kg <span style="color:#00e676">↗</span><br>
-🌽 Mahindi/Maindi: Ksh 65/kg<br>
-🍅 Nyanya: Ksh 120/kg <span style="color:#00e676">↗ +12%</span><br>
+🥔 Viazi: Ksh 80/kg<br>
+🌽 Mahindi: Ksh 65/kg<br>
+🍅 Nyanya: Ksh 120/kg<br>
 </div>
-<div style="text-align:center;padding:16px;color:#546e7a;font-size:11px">Built with ❤️ by Naaman Odhiambo<br>© 2026 Mwananchi AI</div>
+<div style="text-align:center;padding:12px;color:#546e7a;font-size:11px">Built by Naaman Odhiambo<br>© 2026 Mwananchi AI</div>
 <script>
 let M=document.getElementById('msgs'),I=document.getElementById('in'),B=document.getElementById('sb');
 function add(t,c){let d=document.createElement('div');d.className='msg '+c;d.innerText=t;M.appendChild(d);M.scrollTop=M.scrollHeight}
 function q(t){let m={shamba:'Bei za shamba leo?',biashara:'Nipe idea ya biashara ya 10k',kazi:'Nataka kazi online',huduma:'SHA ni pesa ngapi?'}[t];I.value=m;send()}
 function getReply(text){
  let l=text.toLowerCase();
+ // MATH - NEW!
+ let math=text.match(/(\d+)\s*([\+\-\*\/x])\s*(\d+)/);
+ if(math){
+  let a=parseFloat(math[1]), op=math[2], b=parseFloat(math[3]), res=0;
+  if(op=='+') res=a+b; if(op=='-') res=a-b; if(op=='*'||op=='x') res=a*b; if(op=='/') res=a/b;
+  return "🔢 Hesabu: "+a+" "+op+" "+b+" = "+res+" ✅";
+ }
  if(l.match(/unaitwa nani|jina lako|wewe ni nani|who are you|unaitwa|naitwa nani/)) return "Mimi naitwa Mwananchi AI msaidizi wa Mwananchi wa kawaida 🇰🇪";
- if(l.match(/uko aje|mambo|habari|poa|vipi/)) return "Poa sana! 😊 Niko fiti sana! Karibu sana kwa Mwananchi AI. Niko hapa kukusaidia.";
- if(l.match(/maindi|mahindi|shamba|viazi|nyanya|kilimo|mbolea|bei|pesa ngapi/)) return "🌱 Soko Leo:\n🥔 Viazi: Ksh 80/kg\n🌽 Mahindi/Maindi: Ksh 65/kg\n🍅 Nyanya: Ksh 120/kg\n\nTip: Panda mahindi mwezi wa 3-4, tumia mbolea ya mboji.";
- if(l.match(/biashara|biz|idea|10k|20k/)) return "💼 Biashara na 10k:\n1) Mitumba online (TikTok) - buy 5k sell 10k\n2) Mayai & Kuku - 50 kuku = 30k/month\n3) Juice & Smootie\nUnapenda gani nikupe full plan?";
- if(l.match(/kazi|job|online|ajira/)) return "💻 Kazi Online 2026:\n• Data Entry (Upwork) - $5/hr\n• Canva design\n• Transcription - $10/hr";
- if(l.match(/huduma|nhif|sha|id|kra/)) return "🏥 Huduma:\n• SHA/SHIF ni Ksh 300/month min\n• ID: Apply eCitizen";
- if(l.match(/kcse|masomo|shule|exam/)) return "📚 KCSE Tip: Soma 2hrs asubuhi (4-6am) akili fresh! Subject gani?";
- if(l.match(/asante|thanks|sawa/)) return "Karibu sana bro! 😊 Niko hapa anytime.";
- return "Asante! 🙏 Niko hapa kwa:\n🌱 Shamba & Soko\n💼 Biashara\n💻 Kazi\nUliza kama 'Bei ya maindi?'";
+ if(l.match(/uko aje|mambo|habari|poa|vipi/)) return "Poa sana! 😊 Niko fiti sana! Karibu sana kwa Mwananchi AI.";
+ if(l.match(/maindi|mahindi|shamba|viazi|nyanya|kilimo|bei|pesa ngapi/)) return "🌱 Soko Leo:\n🥔 Viazi: Ksh 80/kg\n🌽 Mahindi: Ksh 65/kg\n🍅 Nyanya: Ksh 120/kg";
+ if(l.match(/biashara|biz|idea|10k|20k/)) return "💼 Biashara na 10k:\n1) Mitumba online - buy 5k sell 10k\n2) Mayai & Kuku - 50 kuku = 30k/month\n3) Juice & Smootie";
+ if(l.match(/kazi|job|online|ajira/)) return "💻 Kazi Online:\n• Data Entry - $5/hr\n• Canva design\n• Transcription - $10/hr";
+ if(l.match(/huduma|nhif|sha|id|kra/)) return "🏥 Huduma:\n• SHA ni Ksh 300/month\n• ID: eCitizen";
+ if(l.match(/kcse|masomo|shule|exam/)) return "📚 KCSE Tip: Soma 2hrs asubuhi (4-6am) akili fresh!";
+ if(l.match(/asante|thanks|sawa/)) return "Karibu sana bro! 😊";
+ return "Asante kwa swali! 🙏\n🌱 Shamba & Soko\n💼 Biashara\n💻 Kazi\n🔢 Hesabu kama 7+2\n\nUliza 'Bei ya viazi?' au '7+2'";
 }
-function send(){let v=I.value.trim();if(!v)return;add(v,'me');I.value='';setTimeout(()=>{add(getReply(v),'ai')},400)}
+function send(){let v=I.value.trim();if(!v)return;add(v,'me');I.value='';setTimeout(()=>{add(getReply(v),'ai')},300)}
 B.onclick=send;I.onkeydown=e=>{if(e.key==='Enter')send()}
 </script>
 </body>
 </html>
-
