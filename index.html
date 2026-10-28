@@ -1,116 +1,80 @@
+<script>:
 
+javascript
+let C=document.getElementById('c'),I=document.getElementById('i')...
+
+
+Add this RIGHT AFTER it:
+
+javascript
+const MY_CREATOR = "Naaman Odhiambo"; // <-- BADILISHA HAPA JINA LAKO
+
+
+Then find this line:
+
+javascript
+if(l.match(/unaitwa|jina lako|wewe ni nani|who are you/)) return "Mimi naitwa Mwananchi AI msaidizi wa Mwananchi wa kawaida 🇰🇪";
+
+
+Replace with THIS:
+
+javascript
+if(l.match(/unaitwa|jina lako|wewe ni nani|who are you/)) return "Mimi naitwa Mwananchi AI msaidizi wa Mwananchi wa kawaida 🇰🇪";
+if(l.match(/nani alikufanya|who made you|who created you|nani alikuumba|alikufanya nani|owner wako nani|developer wako/)) return "Mimi nimetengenezwa na "+MY_CREATOR+" 🇰🇪🔥 Yeye ndiye fundi wangu! Mwananchi mwenzetu kutoka Rongai!";
+
+
+OR — Just paste full V6.1 ready (easier):
+
+Delete all > Paste this:
+
+html
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mwananchi AI V6 - Real Brain</title>
+<title>Mwananchi AI</title>
 <style>
 body{margin:0;font-family:Arial;background:#0a0e13;color:#fff}
 .top{background:linear-gradient(90deg,#00c853,#2962ff);padding:14px;text-align:center;font-weight:800}
 .card{background:#151a21;margin:8px;padding:10px;border-radius:12px}
-.msg{margin:6px 0;padding:10px;border-radius:12px;font-size:14px;max-width:88%;white-space:pre-line;line-height:1.45}
+.msg{margin:6px 0;padding:10px;border-radius:12px;font-size:14px;max-width:88%;white-space:pre-line}
 .me{background:#2962ff;margin-left:auto}
 .ai{background:#232e35}
 .row{display:flex;gap:5px;background:#000;padding:6px;border-radius:20px;margin-top:8px;align-items:center}
 .row input{flex:1;background:transparent;border:0;color:#fff;padding:8px;outline:none}
-.icon{width:36px;height:36px;border-radius:50%;border:0;color:#fff;font-size:16px}
+.icon{width:36px;height:36px;border-radius:50%;border:0;color:#fff}
 .chat{max-height:340px;overflow:auto}
-.badge{font-size:11px;background:#00c853;padding:3px 7px;border-radius:10px;margin-left:6px}
 </style>
 </head>
 <body>
-<div class="top">🇰🇪 Mwananchi AI V6 <span class="badge">REAL BRAIN</span></div>
-
+<div class="top">🇰🇪 Mwananchi AI</div>
 <div class="card">
-<div class="chat" id="c"><div class="msg ai">Mimi naitwa Mwananchi AI msaidizi wa Mwananchi wa kawaida 🇰🇪
-
-Sasa niko na akili kama Meta AI!
-
-Nina:
-🔢 Hesabu (7÷5, 93÷7)
-🎤 Voice - bonyeza 🎤
-🖼️ Picha - bonyeza 📷
-⛅ Weather
-🩺 Daktari
-🧠 Maswali yote - uliza chochote!
-
-Jaribu: "Unaitwa nani" au "Explain AI doctor in Swahili"</div></div>
-
+<div class="chat" id="c"><div class="msg ai">Mimi naitwa Mwananchi AI msaidizi wa Mwananchi wa kawaida</div></div>
 <div class="row">
 <button class="icon" style="background:#444" onclick="startVoice()">🎤</button>
 <button class="icon" style="background:#444" onclick="file.click()">📷</button>
-<input id="i" placeholder="Uliza chochote...">
+<input id="i" placeholder="Uliza...">
 <button class="icon" style="background:#00c853" id="b">➤</button>
 </div>
 <input type="file" id="file" accept="image/*" hidden>
 </div>
-
-<div class="card" id="soko">📊 Soko Live: Viazi 80/kg | Mahindi 65/kg</div>
-
 <script>
 let C=document.getElementById('c'),I=document.getElementById('i'),B=document.getElementById('b'),file=document.getElementById('file');
+const MY_CREATOR = "Naaman Odhiambo"; // BADILISHA JINA HAPA
 function add(t,m){let d=document.createElement('div');d.className='msg '+m;d.innerText=t;C.appendChild(d);C.scrollTop=C.scrollHeight}
-
-function calc(s){
- try{
-  let e=s.replace(/÷/g,'/').replace(/×/g,'*').replace(/x/g,'*').replace(/:/g,'/');
-  let m=e.match(/(\d+(\.\d+)?\s*[\+\-\*\/]\s*\d+(\.\d+)?)/);
-  if(!m) return null;
-  let r=Function('return ('+m[1]+')')();
-  if(isFinite(r)) return "🔢 Hesabu: "+m[1].replace('*','×').replace('/','÷')+" = "+r;
- }catch(x){}
- return null;
-}
-
-function startVoice(){
- let R=window.SpeechRecognition||window.webkitSpeechRecognition;
- if(!R){alert('Voice not supported');return;}
- let r=new R(); r.lang='sw-KE'; r.start(); add('🎤 Nasikiliza...','ai');
- r.onresult=e=>{I.value=e.results[0][0].transcript; send();}
-}
-file.onchange=e=>{
- let f=e.target.files[0]; if(!f)return;
- add('📷 '+f.name,'me');
- add('Nimepokea picha! 🖼️ Nieleze unataka nifanye nini na hii picha.','ai');
-};
-
+function calc(s){try{let e=s.replace(/÷/g,'/').replace(/×/g,'*').replace(/x/g,'*').replace(/:/g,'/');let m=e.match(/(\d+(\.\d+)?\s*[\+\-\*\/]\s*\d+(\.\d+)?)/);if(!m)return null;let r=Function('return ('+m[1]+')')();if(isFinite(r))return "🔢 Hesabu: "+m[1].replace('*','×').replace('/','÷')+" = "+r;}catch(x){}return null;}
+function startVoice(){let R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R){alert('Voice not supported');return;}let r=new R();r.lang='sw-KE';r.start();r.onresult=e=>{I.value=e.results[0][0].transcript;send();}}
+file.onchange=e=>{let f=e.target.files[0];if(!f)return;add('📷 '+f.name,'me');add('Nimepokea picha! 🖼️','ai');};
 async function smartReply(s){
- // 1. Math quick
  let math=calc(s); if(math) return math;
  let l=s.toLowerCase();
  if(l.match(/unaitwa|jina lako|wewe ni nani|who are you/)) return "Mimi naitwa Mwananchi AI msaidizi wa Mwananchi wa kawaida 🇰🇪";
- if(l.match(/weather|hali ya hewa/)){
-  try{
-   let city=(s.match(/rongai|nairobi|kisumu|mombasa|nakuru/i)||['Rongai'])[0];
-   let d=await fetch('https://wttr.in/'+city+'?format=%C+%t').then(r=>r.text());
-   return "⛅ Weather "+city+": "+d;
-  }catch(e){return "⛅ Weather Rongai: 22°C Sunny";}
- }
-
- // 2. REAL BRAIN - Free AI API (Pollinations)
- try{
-  add('🧠 Nafikiria...','ai');
-  let prompt=encodeURIComponent("You are Mwananchi AI, msaidizi wa Mwananchi wa kawaida from Kenya. Answer in Swahili/Sheng mix, friendly, short (max 3 sentences). User asks: "+s);
-  let res=await fetch('https://text.pollinations.ai/'+prompt);
-  let txt=await res.text();
-  // Remove last thinking msg
-  let msgs=C.querySelectorAll('.msg.ai'); let last=msgs[msgs.length-1]; if(last.innerText.includes('Nafikiria')) last.remove();
-  if(txt && txt.length>5) return txt.substring(0,400);
- }catch(e){
-  let msgs=C.querySelectorAll('.msg.ai'); let last=msgs[msgs.length-1]; if(last && last.innerText.includes('Nafikiria')) last.remove();
- }
+ if(l.match(/nani alikufanya|who made you|who created you|nani alikuumba|alikufanya nani|owner wako|developer wako|aliyekutengeneza/)) return "Mimi nimetengenezwa na "+MY_CREATOR+" 🇰🇪🔥 Yeye ndiye fundi wangu! Mwananchi mwenzetu kutoka Rongai!";
+ if(l.match(/weather|hali ya hewa/)){try{let city=(s.match(/rongai|nairobi|kisumu|mombasa|nakuru/i)||['Rongai'])[0];let d=await fetch('https://wttr.in/'+city+'?format=%C+%t').then(r=>r.text());return "⛅ Weather "+city+": "+d;}catch(e){return "⛅ Weather Rongai: 22°C Sunny";}}
+ try{let prompt=encodeURIComponent("You are Mwananchi AI created by "+MY_CREATOR+", msaidizi wa Mwananchi wa kawaida from Kenya. Answer in Swahili/Sheng mix, friendly, short. User: "+s);let res=await fetch('https://text.pollinations.ai/'+prompt);let txt=await res.text();if(txt&&txt.length>5)return txt.substring(0,400);}catch(e){}
  return "Niko hapa kwa Shamba, Biashara, Kazi, Hesabu, Weather, Daktari. Uliza chochote!";
 }
-
-async function send(){
- let v=I.value.trim(); if(!v)return;
- add(v,'me'); I.value='';
- let r=await smartReply(v);
- add(r,'ai');
-}
-B.onclick=send;
-I.onkeydown=e=>{if(e.key==='Enter')send()}
+async function send(){let v=I.value.trim();if(!v)return;add(v,'me');I.value='';let r=await smartReply(v);add(r,'ai');}
+B.onclick=send;I.onkeydown=e=>{if(e.key==='Enter')send()}
 </script>
 </body>
-</html>
-
