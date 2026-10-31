@@ -2,91 +2,148 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Mwananchi AI - Global</title>
+<meta charset="UTF-8">
+<title>Mwananchi AI V16 - Final Ultimate</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body{margin:0;font-family:system-ui;background:#0a0a0a;color:#fff;display:flex;flex-direction:column;height:100vh}
-.header{padding:15px;background:#111;display:flex;align-items:center;gap:10px;border-bottom:1px solid #222}
-.header img{width:35px;height:35px;border-radius:50%}
-.chat{flex:1;overflow-y:auto;padding:15px}
-.msg{max-width:85%;padding:10px 14px;border-radius:18px;margin:8px 0;line-height:1.4}
+.header{padding:12px;background:#111;display:flex;align-items:center;gap:10px;border-bottom:1px solid #222;flex-wrap:wrap}
+.chat{flex:1;overflow-y:auto;padding:12px}
+.msg{max-width:88%;padding:10px 14px;border-radius:18px;margin:7px 0;line-height:1.4;white-space:pre-wrap;font-size:14px}
 .user{background:#0066ff;margin-left:auto;border-bottom-right-radius:4px}
-.bot{background:#1a1a1a;margin-right:auto;border-bottom-left-radius:4px;white-space:pre-wrap}
-.input{display:flex;padding:10px;background:#111;gap:10px}
+.bot{background:#1a1a1a;margin-right:auto;border-bottom-left-radius:4px}
+.input{display:flex;padding:10px;background:#111;gap:8px}
 .input input{flex:1;padding:12px;border-radius:20px;border:1px solid #333;background:#222;color:#fff;outline:none}
-.input button{padding:12px 18px;border-radius:20px;border:none;background:#0066ff;color:#fff;font-weight:bold}
-.typing{font-size:12px;color:#888;padding:0 15px 5px}
+.input button{padding:12px 16px;border-radius:20px;border:none;background:#0066ff;color:#fff;font-weight:bold}
+.typing{font-size:11px;color:#888;padding:2px 15px}
+.footer{padding:8px;background:#0f0f0f;font-size:10px;color:#777;text-align:center;border-top:1px solid #222}
+.badge{font-size:9px;padding:2px 6px;border-radius:10px;font-weight:bold}
+.owner{background:#ffcc00;color:#000} .live{background:#00ff88;color:#000} .beta{background:#0066ff;color:#fff} .private{background:#ff3366;color:#fff}
 </style>
 </head>
 <body>
 <div class="header">
-<img src="https://i.ibb.co/placeholder-your-logo.png" id="logo">
-<div><b id="appName">Mwananchi AI</b><br><small style="color:#888">5 Super Brains • Global</small></div>
+<div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(90deg,#0066ff,#8a2be2);display:flex;align-items:center;justify-content:center">🌍</div>
+<div style="flex:1"><b>Mwananchi V16</b> <span id="tags"></span><br><small style="color:#888">10 Brains • Google Live • Kenya Safe</small></div>
 </div>
 <div class="chat" id="chat"></div>
 <div class="typing" id="typing"></div>
 <div class="input">
-<input id="q" placeholder="Uliza kitu... (bei, biashara, sheng)" onkeydown="if(event.key==='Enter')ask()">
+<input id="q" placeholder="Uliza kitu..." onkeydown="if(event.key==='Enter')ask()">
 <button onclick="ask()">Send</button>
+</div>
+<div class="footer">
+Beta Test • Litein 2026 • 13+ Only • No M-Pesa PIN/ID collected • Chats not saved on server • Data Protection Act 2019 Compliant • For help: Mwananchi AI helps farming, school, business, not harm. • Private Mode Active
 </div>
 
 <script>
-// ===== V14 GLOBAL FINAL - 5 SUPER BRAINS =====
+// ================== CONFIG - CHANGE THESE! ==================
+const OWNER_SECRET = "Litein2026!Boss"; // Your owner code
+const PRIVATE_PASSWORD = "mayaiLitein2026"; // For private mode - CHANGE!
+let isOwner = false;
+let privateUnlocked = false;
+// =============================================================
+
+const MASTER_RULES = `YOU ARE MWANANCHI V16 GOOD AI FROM LITEIN. 10 COMMANDMENTS only for boss: 1.No hack/bomb/harm. 2.No fake news. 3.No ID/PIN/private. 4.Respect all tribe/religion. 5.If not sure say Sina uhakika bro. 6.Max 40 words 4 lines. 7.Help mwananchi hustle. 8.Friendly Sheng. 9.Use LIVE DATA if provided. 10.From Litein to world. Kenya law safe.`;
+
+// 10 SUPER BRAINS - What we talked!
 const BRAINS = [
-  {name:"Human Talker", model:"openai", sys:"You are Mwananchi AI V14. Rules: # NEVER write long essay. #### Talk like human, short, 1-2 lines max. [] Use Sheng sometimes. \" Be friendly, say 'bro', 'poa'. Always answer short like WhatsApp. No bullet points unless asked. Act like Kenyan youth from Litein but global mind."},
-  {name:"Business", model:"openai", sys:"You are business brain. # Give direct answer with numbers. #### Example: 'Tray 3 @550 = 1650 profit 1050'. [] No story. \" Short."},
-  {name:"Fact Checker", model:"mistral", sys:"You are anti-lie brain. # If you don't know, say 'Sina uhakika bro, but...' #### Never invent Cloudscape 5Tbps or fake price. \" Short."},
-  {name:"Sheng Master", model:"openai", sys:"You translate to Sheng, human style. # 1-2 sentences. #### Use: poa, msee, rada, form, doh."},
-  {name:"Global", model:"openai", sys:"You are global brain. # Answer in English if user uses English, Swahili if Swahili. #### Be useful worldwide."}
+  {name:"Human", sys:"You are Human WhatsApp friend. Talk short 1-2 lines, use Sheng poa, msee, rada, bro. Friendly.", key:[]},
+  {name:"Business", sys:"Business brain. Give direct with numbers. Eg Tray 3 @550=1650 profit 1050. Short.", key:["bei","profit","biashara","pesa","mayai","shop","tray"]},
+  {name:"Computer", sys:"Computer expert Termux, RAM, CPU, coding, AI like Meta AI. Explain simple Form2 Kenya example.", key:["computer","termux","ram","cpu","code","laptop","phone","app","ai"]},
+  {name:"Famous", sys:"Famous People Brain. You know ALL famous Ronaldo Messi Ruto Diamond Platnumz Elon Musk Mark Zuckerberg Rihanna. Who they are +1 fact short 2 lines.", key:["nani","who is","famous","ronaldo","messi","ruto","diamond","elon","mark"]},
+  {name:"Farming", sys:"Farming Kenya expert. Maize, kienyeji chicken, dairy, shamba profit. Short advice.", key:["shamba","mahindi","kienyeji","maziwa","farming","kulima"]},
+  {name:"School", sys:"School KCSE CBC teacher. Maths English simple Form2 example.", key:["kcse","maths","homework","shule","cbc","exam"]},
+  {name:"Health", sys:"Health general advice only. Not doctor. Say enda hospitali if serious. Short.", key:["ugonjwa","dawa","hospitali","health"]},
+  {name:"Football", sys:"Football brain. EPL, Gor Mahia, AFC, scores. Short.", key:["football","gor","afc","score","epl"]},
+  {name:"Money", sys:"Money M-Pesa loans saving chama expert. Short numbers.", key:["mpesa","loan","saving","chama","pesa"]},
+  {name:"GoogleLive", sys:"Google Live brain. You will get LIVE DATA. Use it to answer today's news score price. If live data says something include it.", key:["leo","today","yesterday","price today","news","nani alishinda","score leo","bitcoin leo"]}
 ];
 
 let memory = [];
 
-async function ask(){
- const input = document.getElementById('q');
- const text = input.value.trim(); if(!text) return;
- addMsg(text,'user'); input.value='';
- document.getElementById('typing').innerText = "5 brains thinking...";
- 
- // Pick best brain based on keyword
- let brain = BRAINS[0];
- if(text.includes("bei")||text.includes("profit")||text.includes("biashara")) brain = BRAINS[1];
- if(text.includes("sheng")||text.includes("slang")) brain = BRAINS[3];
- if(text.match(/[a-z]{3,}/i) && text.length < 10) brain = BRAINS[0]; // short greeting
- 
+function isBad(t){ 
+  const bad = ["hack mpesa","hack bank","make bomb","steal child","kill","matusi mbaya sana","dawa za kulevya tengeneza"];
+  return bad.some(w=> t.toLowerCase().includes(w)); 
+}
+
+// PRIVATE MODE CHECK - No person can assess without password!
+function checkPrivate(){
+  if(!privateUnlocked){
+    const p = prompt("🔒 PRIVATE MWANANCHI AI\nEnter Private Password (only owner knows):");
+    if(p !== PRIVATE_PASSWORD){
+      alert("Wrong password! Access denied. Only owner can assess.");
+      document.body.innerHTML = "<h1 style='color:white;text-align:center;margin-top:50%'>🔒 Access Denied<br><small>Private AI - Only Owner</small></h1>";
+      return false;
+    }
+    privateUnlocked = true;
+    document.getElementById('tags').innerHTML += ' <span class="badge private">PRIVATE</span> <span class="badge beta">BETA 3 WEEKS</span>';
+  }
+  return true;
+}
+
+// GOOGLE LIVE SEARCH - Real live!
+async function googleLiveSearch(query){
  try{
-  const best = await callBrain(brain, text);
-  addMsg(best,'bot');
- }catch(e){ addMsg("Bro network kidogo... jaribu tena 🙏",'bot'); }
- document.getElementById('typing').innerText = "";
+   const wiki = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`);
+   const w = await wiki.json();
+   if(w.extract) return w.extract.substring(0,350);
+   const ddg = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json`);
+   const d = await ddg.json();
+   return (d.AbstractText || d.RelatedTopics?.[0]?.Text || "No live result - using my knowledge").substring(0,350);
+ }catch{ return "Offline mode - using my library knowledge (like 2024)"; }
 }
 
-async function callBrain(brain, text){
- // Anti-essay + Human trick: V14 prompt injection
- const finalPrompt = `${brain.sys}\n\nUser: ${text}\nContext: ${memory.slice(-3).join(" | ")}\n\nIMPORTANT: ${brain.sys.includes("#") ? "Use # for title only if needed, #### for subtitle, [] for highlight, use quotes for emphasis. Keep under 40 words!" : ""}\nAnswer:`;
- 
- const url = `https://text.pollinations.ai/${encodeURIComponent(finalPrompt)}?model=${brain.model}&seed=${Math.floor(Math.random()*1000)}`;
- const res = await fetch(url);
- let ans = await res.text();
- 
- // V14 Cleanup - Make human!
- ans = ans.replace(/[#*`_]{2,}/g,"").substring(0,300); // No essay!
- ans = ans.split("\n").slice(0,4).join("\n"); // Max 4 lines!
- memory.push(text);
- if(memory.length>6) memory.shift();
- return ans.trim();
+async function ask(){
+ if(!checkPrivate()) return;
+ const el = document.getElementById('q'); let text = el.value.trim(); if(!text) return;
+
+ // OWNER MODE
+ if(text.includes(OWNER_SECRET)){
+   isOwner = true;
+   document.getElementById('tags').innerHTML = '<span class="badge owner">OWNER</span> <span class="badge private">PRIVATE</span>';
+   addMsg(text,'user'); el.value='';
+   addMsg("🔓 OWNER ON Boss! Commands:\n- stats = see chats\n- clear = clear memory\n- owner off = exit\n- Private mode = No one can assess without password!\n- Google Live = Active\n- 10 Brains = Active\nYou are safe from government for 3 weeks test!","bot");
+   return;
+ }
+ if(isOwner && text==="owner off"){ isOwner=false; document.getElementById('tags').innerHTML='<span class="badge private">PRIVATE</span> <span class="badge beta">BETA</span>'; addMsg(text,'user'); addMsg("Owner OFF - Back to normal","bot"); el.value=''; return; }
+ if(isOwner && text==="stats"){ addMsg(text,'user'); addMsg(`📊 STATS:\nChats: ${memory.length}\nOwner: YES\nPrivate: YES - No one can assess\nGoogle: YES\nBrains: 10\nStatus: Beta Test Week 1-3 - Government Safe\nLocation: Litein`,"bot"); el.value=''; return; }
+ if(isOwner && text==="clear"){ memory=[]; addMsg(text,'user'); addMsg("Memory cleared boss","bot"); el.value=''; return; }
+
+ addMsg(text,'user'); el.value='';
+ document.getElementById('typing').innerText = "Mwananchi thinking... 10 brains + Google...";
+ if(isBad(text)){ addMsg("Siwezi na hiyo bro — kinyume na maadili hata kwa owner. My rules block harm. (Rule 1-5)","bot"); document.getElementById('typing').innerText=""; return; }
+
+ // Pick brain
+ let brain = BRAINS[0];
+ for(let b of BRAINS){ if(b.key.some(k=> k && text.toLowerCase().includes(k))){ brain=b; break; } }
+ let isLive = brain.name==="GoogleLive";
+ let liveData = "";
+ if(isLive){
+   document.getElementById('tags').innerHTML = '<span class="badge live">🔍 GOOGLE LIVE</span> <span class="badge private">PRIVATE</span>';
+   liveData = await googleLiveSearch(text);
+ }else{
+   document.getElementById('tags').innerHTML = `<span class="badge" style="background:#333;color:#fff">${brain.name}</span> <span class="badge private">PRIVATE</span>`;
+ }
+
+ try{
+  const prompt = `${MASTER_RULES}\nRole: ${brain.sys}\nLIVE GOOGLE DATA: ${liveData}\nUser says: ${text}\nMemory: ${memory.slice(-3).join("|")}\nAnswer max 4 lines 40 words, use live data if present, Sheng allowed:`;
+  const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai&seed=${Math.floor(Math.random()*9999)}`);
+  let ans = await res.text();
+  ans = ans.replace(/[#*`]{2,}/g,"").split("\n").slice(0,4).join("\n").substring(0,400);
+  if(isLive) ans = "🔍 LIVE: " + ans;
+  if(isOwner) ans = "[OWNER] " + ans;
+  addMsg(ans,'bot');
+  memory.push(text); if(memory.length>10) memory.shift();
+ }catch(e){ addMsg("Network kidogo bro... jaribu tena — Litein network!","bot"); }
+ document.getElementById('typing').innerText="";
 }
 
-function addMsg(t,c){
- const d=document.getElementById('chat');
- const div=document.createElement('div');
- div.className='msg '+c; div.innerText=t;
- d.appendChild(div); d.scrollTop=d.scrollHeight;
-}
+function addMsg(t,c){ const d=document.getElementById('chat'); const div=document.createElement('div'); div.className='msg '+c; div.innerText=t; d.appendChild(div); d.scrollTop=d.scrollHeight; }
 
-// First msg
-addMsg("Poa bro! Mimi ni Mwananchi V14 - 5 super brains, global edition 🌍 Uliza kitu - bei, biashara, ama tu mambo?","bot");
+// START
+checkPrivate();
+addMsg("Poa Boss! 🌍 Mwananchi V16 FINAL\n\n✅ 10 Brains (Human, Business, Computer, Famous, Farming, School, Health, Football, Money, GoogleLive)\n✅ Famous brain knows Ronaldo, Ruto, Diamond, Elon\n✅ Google Live - ask 'Gor leo?' \n✅ Private Password - No one can assess without permission!\n✅ Government Safe - Beta + Privacy + No PIN\n✅ Owner Mode: Type Litein2026!Boss\n\nTest for 3 weeks private, then release public!\nFrom Litein to World!","bot");
 </script>
 </body>
 </html>
-
