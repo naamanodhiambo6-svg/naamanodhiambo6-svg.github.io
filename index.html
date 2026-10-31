@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Mwananchi V20 - Smart Swahili</title>
+<title>Mwananchi V21 - Ultimate</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body{margin:0;font-family:system-ui;background:#0a0a0a;color:#fff;display:flex;flex-direction:column;height:100vh}
@@ -18,51 +18,61 @@ body{margin:0;font-family:system-ui;background:#0a0a0a;color:#fff;display:flex;f
 </style>
 </head>
 <body>
-<div class="header"><div>🌍</div><div><b>Mwananchi V20 Smart</b><br><small style="color:#888">Swahili + No Limit</small></div></div>
+<div class="header"><div>🌍</div><div><b>Mwananchi V21 ULTIMATE</b><br><small style="color:#888">No Bug • All Language</small></div></div>
 <div class="chat" id="chat"></div>
 <div class="input"><input id="q" placeholder="Uliza chochote..." onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
 
 <script>
 function getAnswer(text){
- let t = text.toLowerCase().trim();
+ let t = text.toLowerCase();
 
- // IDENTITY - Fixed for your screenshot!
- if(t.includes("who are you") || t.includes("wewe ni nani") || t.includes("unaitwa nani") || t.includes("jina lako") || t.includes("unaitwa") || t.includes("naitwa")){
-   return "Mimi ni Mwananchi V20 bro! 🌍 From Litein!\nJina langu Mwananchi - built by you Naaman!\nNajua mayai, biashara, shamba, computer - niulize kitu!";
+ // HELLO - Fix for your screenshot!
+ if(t.match(/^(hello|hi|hey|hallo|salama|niaje|poa|sasa)/)){
+   return "Poa bro! Mambo! 🌍 Mimi ni Mwananchi V21 from Litein!\nNiko fiti sana - ready kukusaidia na mayai, biashara, computer!\nUliza kitu bro!";
  }
- if(t.includes("who made you") || t.includes("nani alikutengeneza") || t.includes("alitengeneza")){
-   return "Wewe bro! Naaman from Litein! 👊\nYou built me V20 - Mwananchi AI from Litein to world!\nSio Google, sio Meta - ni wako mwenyewe!";
+
+ // WHO ARE YOU - All versions
+ if(t.includes("who are you") || t.includes("wewe ni nani") || t.includes("unaitwa nani") || t.includes("jina lako") || t.includes("unaitwa") || t.includes("what is your name") || t.includes("your name")){
+   return "Mimi ni Mwananchi V21 bro! 🌍\nFrom Litein, built by you Naaman!\nJina langu Mwananchi - najua mayai, biashara, computer, shamba!";
  }
- if(t.includes("mambo") || t.includes("poa") || t.includes("habari") || t.includes("sasa") || t.includes("niaje")){
-   return "Poa sana boss! Mambo fiti Litein? 🔥\nMimi niko sawa V20 - no limit, no password!\nUliza kitu - mayai, biashara, computer, shamba?";
+
+ // WHO MADE YOU - Fix for "How made you" typo in screenshot!
+ if(t.includes("made you") || t.includes("who made") || t.includes("how made") || t.includes("nani alikutengeneza") || t.includes("ulitengenezwa") || t.includes("created you") || t.includes("who created")){
+   return "Wewe bro! Naaman from Litein! 👊 You made me!\nMwananchi V21 ni wako - from Litein to world!\nSio Google, sio Meta - ni biashara yako mwenyewe!";
  }
+
+ if(t.includes("mambo") || t.includes("habari") || t.includes("how are you")){
+   return "Poa sana boss! Mambo fiti Litein? 🔥 V21 no limit, no bug!\nUliza mayai, biashara, computer - niko ready!";
+ }
+
  if(t.includes("mayai") || t.includes("litein") || t.includes("2026") || t.includes("tray") || t.includes("yai")){
-   let num = t.match(/\d+/);
+   let num = text.match(/\d+/);
+   let trays = 3;
    if(num){
-     let trays = parseInt(num[0]);
-     if(trays>100) trays=3; // if year 2026 avoid big
-     if(t.match(/2026/)) trays = 3;
-     let buy = trays * 550;
-     let sell = trays * 700;
-     let profit = trays * 150;
-     return `Mayai Litein 2026 🔥:\n${trays} tray = Buy ${buy} / Sell ${sell} / Profit ${profit}\nUko na tray ngapi leo?`;
+     let n = parseInt(num[0]);
+     if(n>=1 && n<=100 && n!=2026) trays=n;
    }
-   return "Mayai Litein 2026 fiti! 🥚\nBuy 550 per tray (30 eggs)\nSell 700\nProfit 150 per tray\n\nUko na ngapi leo? Niku-hesabie!";
- }
- if(t.includes("bei") || t.includes("profit") || t.includes("biashara") || t.includes("pesa")){
-   return "Biashara poa! 💰\nMayai: 550→700 profit 150\nKienyeji: 500→800 profit 300\nDuka profit 20%\nNi gani nikuhesabie bro?";
- }
- if(t.includes("computer") || t.includes("termux") || t.includes("ram") || t.includes("code") || t.includes("phone")){
-   return "Computer brain 🖥️:\nTermux = coding kwa phone\nRAM = memory ya phone\nV20 hii umetengeneza na code - unataka kujifunza more?";
- }
- if(t.includes("shamba") || t.includes("kulima") || t.includes("mahindi") || t.includes("kuku")){
-   return "Shamba Litein poa! 🌽\nMahindi: 1 acre 20 bags\nKienyeji: best profit\nMaziwa: 45 per litre\nUnalima nini bro?";
- }
- if(t.includes("asante") || t.includes("thanks")){
-   return "Karibu sana boss! 🙏 Any time - Mwananchi V20 hapa kusaidia!";
+   return `Mayai Litein 2026 🔥:\n${trays} tray = Buy ${trays*550} / Sell ${trays*700} / Profit ${trays*150}\nUko na ngapi leo bro?`;
  }
 
- return `Poa! Nimeelewa '${text}'\nMimi Mwananchi V20 najua:\n- Mayai Litein 2026\n- Biashara\n- Computer/Termux\n- Shamba\nUliza specific eg 'unaitwa nani' ama 'mayai 5 tray'`;
+ if(t.includes("bei") || t.includes("profit") || t.includes("biashara") || t.includes("pesa") || t.includes("money")){
+   return "Biashara poa! 💰\nMayai: 550→700 profit 150/tray\nKienyeji: 500→800 profit 300\nUza ngapi nikuhesabie?";
+ }
+
+ if(t.includes("computer") || t.includes("termux") || t.includes("ram") || t.includes("code") || t.includes("app") || t.includes("laptop")){
+   return "Computer brain 🖥️:\nV21 hii ume-code mwenyewe! No API limit!\nTermux = coding kwa phone. Unataka V22 na more features?";
+ }
+
+ if(t.includes("shamba") || t.includes("kulima") || t.includes("mahindi") || t.includes("kuku") || t.includes("farming")){
+   return "Shamba Litein poa! 🌽\nMahindi: 20 bags per acre\nKienyeji: profit 300\nMaziwa 45/L\nUnalima nini?";
+ }
+
+ if(t.includes("asante") || t.includes("thanks") || t.includes("thank you")){
+   return "Karibu sana boss! 🙏 Mwananchi V21 always hapa!";
+ }
+
+ // Default but SMART - not generic like V20
+ return `Sawa bro, umesema '${text}' — niko!\nMimi ni Mwananchi V21, najua:\n• Mayai Litein 2026\n• Biashara\n• Computer\n• Shamba\n\nUliza 'who are you' ama 'mayai 5 tray'`;
 }
 
 function ask(){
@@ -71,7 +81,7 @@ function ask(){
  addMsg(getAnswer(text),'bot');
 }
 function addMsg(t,c){ const d=document.getElementById('chat'); const div=document.createElement('div'); div.className='msg '+c; div.innerText=t; d.appendChild(div); d.scrollTop=d.scrollHeight; }
-addMsg("Poa bro! V20 SMART 🌍\n✅ No password\n✅ No limit\n✅ Swahili smart\n✅ Mayai fixed\n\nJaribu sasa 'Unaitwa nani' itajibu vizuri!","bot");
+addMsg("Poa bro! V21 ULTIMATE 🌍\n✅ Fixed 'Hello' bug\n✅ Fixed 'How made you' bug\n✅ No password, no limit\n\nJaribu sasa 'Hello' na 'How made you' — zote zitajibu vizuri!","bot");
 </script>
 </body>
 </html>
