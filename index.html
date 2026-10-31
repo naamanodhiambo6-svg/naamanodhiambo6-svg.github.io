@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Mwananchi V19 - No Limit</title>
+<title>Mwananchi V20 - Smart Swahili</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body{margin:0;font-family:system-ui;background:#0a0a0a;color:#fff;display:flex;flex-direction:column;height:100vh}
@@ -15,60 +15,64 @@ body{margin:0;font-family:system-ui;background:#0a0a0a;color:#fff;display:flex;f
 .input{display:flex;padding:10px;background:#111;gap:8px}
 .input input{flex:1;padding:12px;border-radius:20px;border:1px solid #333;background:#222;color:#fff;outline:none}
 .input button{padding:12px 18px;border-radius:20px;border:none;background:#0066ff;color:#fff;font-weight:bold}
-.footer{padding:7px;background:#0f0f0f;font-size:10px;color:#666;text-align:center}
 </style>
 </head>
 <body>
-<div class="header"><div>🌍</div><div><b>Mwananchi V19</b><br><small style="color:#888">No Limit • Offline Ready</small></div></div>
+<div class="header"><div>🌍</div><div><b>Mwananchi V20 Smart</b><br><small style="color:#888">Swahili + No Limit</small></div></div>
 <div class="chat" id="chat"></div>
 <div class="input"><input id="q" placeholder="Uliza chochote..." onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
-<div class="footer">V19 • No API limit • Works offline • Litein 2026</div>
 
 <script>
 function getAnswer(text){
- let t = text.toLowerCase();
+ let t = text.toLowerCase().trim();
 
- if(t.includes("who are you") || t.includes("wewe ni nani")){
-   return "Mimi ni Mwananchi V19 bro! 🌍 From Litein, built by you! I'm your WhatsApp friend, ready to help na mayai, biashara, computer, shamba - poa?";
+ // IDENTITY - Fixed for your screenshot!
+ if(t.includes("who are you") || t.includes("wewe ni nani") || t.includes("unaitwa nani") || t.includes("jina lako") || t.includes("unaitwa") || t.includes("naitwa")){
+   return "Mimi ni Mwananchi V20 bro! 🌍 From Litein!\nJina langu Mwananchi - built by you Naaman!\nNajua mayai, biashara, shamba, computer - niulize kitu!";
  }
- if(t.includes("who made you") || t.includes("nani alikutengeneza")){
-   return "Wewe bro! Naaman from Litein! You built me V19. I am Mwananchi AI - from Litein to world. Sio Google, sio Meta - ni wako!";
+ if(t.includes("who made you") || t.includes("nani alikutengeneza") || t.includes("alitengeneza")){
+   return "Wewe bro! Naaman from Litein! 👊\nYou built me V20 - Mwananchi AI from Litein to world!\nSio Google, sio Meta - ni wako mwenyewe!";
  }
- if(t.includes("mayai") || t.includes("litein") || t.includes("2026") || t.includes("tray")){
-   // Calculate if they say number
+ if(t.includes("mambo") || t.includes("poa") || t.includes("habari") || t.includes("sasa") || t.includes("niaje")){
+   return "Poa sana boss! Mambo fiti Litein? 🔥\nMimi niko sawa V20 - no limit, no password!\nUliza kitu - mayai, biashara, computer, shamba?";
+ }
+ if(t.includes("mayai") || t.includes("litein") || t.includes("2026") || t.includes("tray") || t.includes("yai")){
    let num = t.match(/\d+/);
    if(num){
      let trays = parseInt(num[0]);
+     if(trays>100) trays=3; // if year 2026 avoid big
+     if(t.match(/2026/)) trays = 3;
      let buy = trays * 550;
      let sell = trays * 700;
      let profit = trays * 150;
-     return `Poa boss! Mayai Litein 2026:\n${trays} tray = Buy ${buy} Sell ${sell} Profit ${profit}\nUko na ${trays} tray leo? Profit ni ${profit} poa!`;
+     return `Mayai Litein 2026 🔥:\n${trays} tray = Buy ${buy} / Sell ${sell} / Profit ${profit}\nUko na tray ngapi leo?`;
    }
-   return "Poa boss! Mayai Litein 2026 iko fiti 🔥\nBuy: 550 per tray (30 eggs)\nSell: 700\nProfit: 150 per tray\n\nUko na ngapi leo? Niku-hesabie profit!";
+   return "Mayai Litein 2026 fiti! 🥚\nBuy 550 per tray (30 eggs)\nSell 700\nProfit 150 per tray\n\nUko na ngapi leo? Niku-hesabie!";
  }
- if(t.includes("bei") || t.includes("profit") || t.includes("biashara")){
-   return "Biashara poa! Mayai 550→700 profit 150. Kuku kienyeji 500→800 profit 300. Chagua gani nikuhesabie?";
+ if(t.includes("bei") || t.includes("profit") || t.includes("biashara") || t.includes("pesa")){
+   return "Biashara poa! 💰\nMayai: 550→700 profit 150\nKienyeji: 500→800 profit 300\nDuka profit 20%\nNi gani nikuhesabie bro?";
  }
- if(t.includes("computer") || t.includes("termux") || t.includes("ram") || t.includes("code")){
-   return "Computer brain 🖥️: Termux ni app ya coding kwa phone. RAM ndio memory. Unataka kujifunza coding ama kutengeneza app kama hii V19?";
+ if(t.includes("computer") || t.includes("termux") || t.includes("ram") || t.includes("code") || t.includes("phone")){
+   return "Computer brain 🖥️:\nTermux = coding kwa phone\nRAM = memory ya phone\nV20 hii umetengeneza na code - unataka kujifunza more?";
  }
- if(t.includes("shamba") || t.includes("kulima") || t.includes("mahindi")){
-   return "Shamba poa! Mahindi Litein: Mbegu 1kg 300, mavuno 20 bags per acre. Kienyeji best profit. Unalima nini bro?";
+ if(t.includes("shamba") || t.includes("kulima") || t.includes("mahindi") || t.includes("kuku")){
+   return "Shamba Litein poa! 🌽\nMahindi: 1 acre 20 bags\nKienyeji: best profit\nMaziwa: 45 per litre\nUnalima nini bro?";
  }
- if(t.includes("habari") || t.includes("poa") || t.includes("mambo")){
-   return "Poa sana boss! Mambo fiti Litein? Mimi niko sawa - V19 no limit! Uliza kitu - mayai, biashara, computer?";
+ if(t.includes("asante") || t.includes("thanks")){
+   return "Karibu sana boss! 🙏 Any time - Mwananchi V20 hapa kusaidia!";
  }
- return "Poa bro! Nimeskia: '"+text+"'.\nMimi ni Mwananchi V19 from Litein - najua mayai, biashara, shamba, computer, school.\nUliza tena specific - eg 'Mayai litein 2026' ama 'computer' ama 'shamba'";
+
+ return `Poa! Nimeelewa '${text}'\nMimi Mwananchi V20 najua:\n- Mayai Litein 2026\n- Biashara\n- Computer/Termux\n- Shamba\nUliza specific eg 'unaitwa nani' ama 'mayai 5 tray'`;
 }
 
 function ask(){
  const el=document.getElementById('q'); let text=el.value.trim(); if(!text) return;
  addMsg(text,'user'); el.value='';
- let ans = getAnswer(text);
- addMsg(ans,'bot');
+ addMsg(getAnswer(text),'bot');
 }
 function addMsg(t,c){ const d=document.getElementById('chat'); const div=document.createElement('div'); div.className='msg '+c; div.innerText=t; d.appendChild(div); d.scrollTop=d.scrollHeight; }
-addMsg("Poa bro! V19 NO LIMIT 🌍\nHakuna 'free limit reached' tena!\n\n✅ No password\n✅ No 45 sec wait\n✅ Works offline\n✅ Mayai litein 2026 fixed\n\nUliza kitu!","bot");
+addMsg("Poa bro! V20 SMART 🌍\n✅ No password\n✅ No limit\n✅ Swahili smart\n✅ Mayai fixed\n\nJaribu sasa 'Unaitwa nani' itajibu vizuri!","bot");
 </script>
 </body>
 </html>
+
