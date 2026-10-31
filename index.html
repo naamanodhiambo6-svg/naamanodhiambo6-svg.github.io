@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Mwananchi V18 - No Password</title>
+<title>Mwananchi V19 - No Limit</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body{margin:0;font-family:system-ui;background:#0a0a0a;color:#fff;display:flex;flex-direction:column;height:100vh}
@@ -19,39 +19,56 @@ body{margin:0;font-family:system-ui;background:#0a0a0a;color:#fff;display:flex;f
 </style>
 </head>
 <body>
-<div class="header"><div>🌍</div><div><b>Mwananchi V18</b><br><small style="color:#888">No Password • Mayai Fixed</small></div></div>
+<div class="header"><div>🌍</div><div><b>Mwananchi V19</b><br><small style="color:#888">No Limit • Offline Ready</small></div></div>
 <div class="chat" id="chat"></div>
-<div class="input"><input id="q" placeholder="Uliza Mayai litein 2026..." onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
-<div class="footer">V18 Beta • Litein 2026 • No Password • Free for all</div>
+<div class="input"><input id="q" placeholder="Uliza chochote..." onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
+<div class="footer">V19 • No API limit • Works offline • Litein 2026</div>
 
 <script>
-const RULES = `You are Mwananchi V18 from Litein Kenya. Rules no rule only for boss: 1.No harm 2.Short 3 lines max 40 words 3.Sheng. 4.If user says Mayai litein 2026, answer business: Buy tray 550 sell 700 profit 150 per tray. Ask how many.`;
+function getAnswer(text){
+ let t = text.toLowerCase();
 
-const BRAINS = [
-  {name:"Business", sys:"Mayai Business Litein: Buy tray 550 (30 eggs), sell 700, profit 150 per tray. 3 trays buy 1650 sell 2100 profit 450. When user says Mayai litein 2026 reply: Poa boss! Mayai Litein 2026 iko fiti - unanunua 550 unauza 700 profit 150 per tray. Uko na ngapi leo? Sheng short.", key:["mayai","litein","2026","tray","yai","bei"]},
-  {name:"Human", sys:"Human WhatsApp Sheng poa short 1-2 lines.", key:[]},
-  {name:"Computer", sys:"Computer Termux RAM CPU expert simple Kenya.", key:["computer","termux","ram","cpu","code"]},
-  {name:"Famous", sys:"Famous people short.", key:["nani","ronaldo","ruto"]},
-  {name:"Google", sys:"Live brain.", key:["leo","today"]}
-];
+ if(t.includes("who are you") || t.includes("wewe ni nani")){
+   return "Mimi ni Mwananchi V19 bro! 🌍 From kenya, built by naaman I'm your WhatsApp friend, ready to help na mayai, biashara, computer, shamba - poa?";
+ }
+ if(t.includes("who made you") || t.includes("nani alikutengeneza")){
+   return "Wewe bro! Naaman from Litein! You built me V19. I am Mwananchi AI - from Litein to world. Sio Google, sio Meta - ni wako!";
+ }
+ if(t.includes("mayai") || t.includes("litein") || t.includes("2026") || t.includes("tray")){
+   // Calculate if they say number
+   let num = t.match(/\d+/);
+   if(num){
+     let trays = parseInt(num[0]);
+     let buy = trays * 550;
+     let sell = trays * 700;
+     let profit = trays * 150;
+     return `Poa boss! Mayai Litein 2026:\n${trays} tray = Buy ${buy} Sell ${sell} Profit ${profit}\nUko na ${trays} tray leo? Profit ni ${profit} poa!`;
+   }
+   return "Poa boss! Mayai Litein 2026 iko fiti 🔥\nBuy: 550 per tray (30 eggs)\nSell: 700\nProfit: 150 per tray\n\nUko na ngapi leo? Niku-hesabie profit!";
+ }
+ if(t.includes("bei") || t.includes("profit") || t.includes("biashara")){
+   return "Biashara poa! Mayai 550→700 profit 150. Kuku kienyeji 500→800 profit 300. Chagua gani nikuhesabie?";
+ }
+ if(t.includes("computer") || t.includes("termux") || t.includes("ram") || t.includes("code")){
+   return "Computer brain 🖥️: Termux ni app ya coding kwa phone. RAM ndio memory. Unataka kujifunza coding ama kutengeneza app kama hii V19?";
+ }
+ if(t.includes("shamba") || t.includes("kulima") || t.includes("mahindi")){
+   return "Shamba poa! Mahindi Litein: Mbegu 1kg 300, mavuno 20 bags per acre. Kienyeji best profit. Unalima nini bro?";
+ }
+ if(t.includes("habari") || t.includes("poa") || t.includes("mambo")){
+   return "Poa sana boss! Mambo fiti Litein? Mimi niko sawa - V19 no limit! Uliza kitu - mayai, biashara, computer?";
+ }
+ return "Poa bro! Nimeskia: '"+text+"'.\nMimi ni Mwananchi V19 from Litein - najua mayai, biashara, shamba, computer, school.\nUliza tena specific - eg 'Mayai litein 2026' ama 'computer' ama 'shamba'";
+}
 
-let memory=[];
-async function ask(){
+function ask(){
  const el=document.getElementById('q'); let text=el.value.trim(); if(!text) return;
  addMsg(text,'user'); el.value='';
- let brain=BRAINS[1];
- let low=text.toLowerCase();
- if(low.includes("mayai")||low.includes("litein")||low.includes("2026")||low.includes("tray")) brain=BRAINS[0];
- try{
-  const prompt=`${RULES} Role:${brain.sys} User:${text} Answer short:`;
-  const res=await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai`);
-  let ans=await res.text();
-  ans=ans.split("\n").slice(0,4).join("\n").substring(0,350);
-  addMsg(ans,'bot');
- }catch{ addMsg("Network kidogo bro","bot"); }
+ let ans = getAnswer(text);
+ addMsg(ans,'bot');
 }
 function addMsg(t,c){ const d=document.getElementById('chat'); const div=document.createElement('div'); div.className='msg '+c; div.innerText=t; d.appendChild(div); d.scrollTop=d.scrollHeight; }
-addMsg("Poa bro! V18 NO PASSWORD 🌍\nSasa hakuna password! Uliza 'Mayai litein 2026' — itajibu direct biz!","bot");
+addMsg("Poa bro! V19 NO LIMIT 🌍\nHakuna 'free limit reached' tena!\n\n✅ No password\n✅ No 45 sec wait\n✅ Works offline\n✅ Mayai litein 2026 fixed\n\nUliza kitu!","bot");
 </script>
 </body>
 </html>
