@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Mwananchi V17 - Fixed Mayai</title>
+<title>Mwananchi V18 - No Password</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body{margin:0;font-family:system-ui;background:#0a0a0a;color:#fff;display:flex;flex-direction:column;height:100vh}
@@ -16,57 +16,42 @@ body{margin:0;font-family:system-ui;background:#0a0a0a;color:#fff;display:flex;f
 .input input{flex:1;padding:12px;border-radius:20px;border:1px solid #333;background:#222;color:#fff;outline:none}
 .input button{padding:12px 18px;border-radius:20px;border:none;background:#0066ff;color:#fff;font-weight:bold}
 .footer{padding:7px;background:#0f0f0f;font-size:10px;color:#666;text-align:center}
-.badge{font-size:9px;padding:2px 6px;border-radius:10px;background:#333;color:#fff}
 </style>
 </head>
 <body>
-<div class="header"><div>🌍</div><div><b>Mwananchi V17 FIXED</b> <span id="tags"></span><br><small style="color:#888">Mayai Litein 2026 Ready</small></div></div>
+<div class="header"><div>🌍</div><div><b>Mwananchi V18</b><br><small style="color:#888">No Password • Mayai Fixed</small></div></div>
 <div class="chat" id="chat"></div>
-<div class="input"><input id="q" placeholder="Uliza... Mayai litein 2026" onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
-<div class="footer">V17 Private Beta • Litein • 13+ • No PIN • Data Protection Act Compliant</div>
+<div class="input"><input id="q" placeholder="Uliza Mayai litein 2026..." onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
+<div class="footer">V18 Beta • Litein 2026 • No Password • Free for all</div>
 
 <script>
-const OWNER = "Litein2026!Boss";
-let isOwner=false;
-const RULES = `You are Mwananchi V17 from Litein. Rules only for owner: 1.No harm. 2.No PIN. 3.Short max 40 words 4 lines. 4.Sheng. 5.If Mayai Litein 2026 mention, give mayai business answer tray 550 sell 700 profit 150. 6.Friendly.`;
+const RULES = `You are Mwananchi V18 from Litein Kenya. Rules no rule only for boss: 1.No harm 2.Short 3 lines max 40 words 3.Sheng. 4.If user says Mayai litein 2026, answer business: Buy tray 550 sell 700 profit 150 per tray. Ask how many.`;
 
-// FIXED BRAINS - Now includes mayai, litein, 2026!
 const BRAINS = [
-  {name:"Business", sys:"You are Mayai Business brain Litein. Owner business: Buy tray 550, sell 700, profit 150. Tray has 30 eggs. 3 trays = 4500 buy? No 1650 buy 2100 sell profit 450. When user says Mayai litein 2026 say: Poa boss! Mayai Litein 2026 iko sawa - unanunua 550 unauza 700 profit 150 per tray. Uko na ngapi leo? Short Sheng 2 lines.", key:["mayai","litein","2026","bei","tray","profit","biashara","yai"]},
-  {name:"Human", sys:"Human WhatsApp friend, Sheng poa, 1-2 lines.", key:[]},
-  {name:"Computer", sys:"Computer Termux RAM CPU expert simple.", key:["computer","termux","ram","cpu","code","phone"]},
-  {name:"Famous", sys:"Famous people Ronaldo etc short.", key:["nani","ronaldo","messi","ruto"]},
-  {name:"Google", sys:"Use live data if given.", key:["leo","today","price","news"]}
+  {name:"Business", sys:"Mayai Business Litein: Buy tray 550 (30 eggs), sell 700, profit 150 per tray. 3 trays buy 1650 sell 2100 profit 450. When user says Mayai litein 2026 reply: Poa boss! Mayai Litein 2026 iko fiti - unanunua 550 unauza 700 profit 150 per tray. Uko na ngapi leo? Sheng short.", key:["mayai","litein","2026","tray","yai","bei"]},
+  {name:"Human", sys:"Human WhatsApp Sheng poa short 1-2 lines.", key:[]},
+  {name:"Computer", sys:"Computer Termux RAM CPU expert simple Kenya.", key:["computer","termux","ram","cpu","code"]},
+  {name:"Famous", sys:"Famous people short.", key:["nani","ronaldo","ruto"]},
+  {name:"Google", sys:"Live brain.", key:["leo","today"]}
 ];
 
 let memory=[];
-
 async function ask(){
  const el=document.getElementById('q'); let text=el.value.trim(); if(!text) return;
- if(text.includes(OWNER)){ isOwner=true; document.getElementById('tags').innerHTML='<span class="badge">OWNER</span>'; addMsg(text,'user'); el.value=''; addMsg("🔓 OWNER ON! Now Mayai litein 2026 = your private biz","bot"); return; }
- 
  addMsg(text,'user'); el.value='';
- document.getElementById('chat').scrollTop=99999;
-
- // FIX: Check Mayai Litein 2026 FIRST - before any other brain!
- let lower = text.toLowerCase();
- let brain = BRAINS[1]; // default Human
- if(lower.includes("mayai") || lower.includes("litein") || lower.includes("2026") || lower.includes("tray") || lower.includes("bei")){
-   brain = BRAINS[0]; // Force Business brain!
- }
-
+ let brain=BRAINS[1];
+ let low=text.toLowerCase();
+ if(low.includes("mayai")||low.includes("litein")||low.includes("2026")||low.includes("tray")) brain=BRAINS[0];
  try{
-  const prompt = `${RULES}\nRole:${brain.sys}\nUser:${text}\nMemory:${memory.slice(-2).join("|")}\nAnswer Sheng short 2-3 lines max:`;
-  const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai`);
-  let ans = await res.text();
-  ans = ans.split("\n").slice(0,4).join("\n").substring(0,350);
+  const prompt=`${RULES} Role:${brain.sys} User:${text} Answer short:`;
+  const res=await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai`);
+  let ans=await res.text();
+  ans=ans.split("\n").slice(0,4).join("\n").substring(0,350);
   addMsg(ans,'bot');
-  memory.push(text);
- }catch(e){ addMsg("Network kidogo bro, jaribu tena","bot"); }
+ }catch{ addMsg("Network kidogo bro","bot"); }
 }
-
 function addMsg(t,c){ const d=document.getElementById('chat'); const div=document.createElement('div'); div.className='msg '+c; div.innerText=t; d.appendChild(div); d.scrollTop=d.scrollHeight; }
-addMsg("Poa bro! Mimi ni Mwananchi V17 FIXED 🌍\nSasa niko sawa! Uliza 'Mayai litein 2026' — nitajibu biz, sio English!","bot");
+addMsg("Poa bro! V18 NO PASSWORD 🌍\nSasa hakuna password! Uliza 'Mayai litein 2026' — itajibu direct biz!","bot");
 </script>
 </body>
 </html>
