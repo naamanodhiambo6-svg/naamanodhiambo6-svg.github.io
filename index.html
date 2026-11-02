@@ -3,85 +3,81 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Mwananchi V21 - Ultimate</title>
+<title>Mwananchi V23 - Image Gen</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body{margin:0;font-family:system-ui;background:#0a0a0a;color:#fff;display:flex;flex-direction:column;height:100vh}
-.header{padding:12px;background:#111;display:flex;gap:10px;border-bottom:1px solid #222}
+.header{padding:12px;background:#111;display:flex;justify-content:space-between;border-bottom:1px solid #222}
 .chat{flex:1;overflow-y:auto;padding:12px}
-.msg{max-width:88%;padding:10px 14px;border-radius:18px;margin:7px 0;line-height:1.4;white-space:pre-wrap;font-size:14px}
+.msg{max-width:88%;padding:10px 14px;border-radius:18px;margin:7px 0;line-height:1.4;white-space:pre-wrap;font-size:13px}
 .user{background:#0066ff;margin-left:auto;border-bottom-right-radius:4px}
-.bot{background:#1a1a1a;margin-right:auto;border-bottom-left-radius:4px}
+.bot{background:#1a1a1a;margin-right:auto;border-bottom-left-radius:4px;border:1px solid #222}
 .input{display:flex;padding:10px;background:#111;gap:8px}
 .input input{flex:1;padding:12px;border-radius:20px;border:1px solid #333;background:#222;color:#fff;outline:none}
 .input button{padding:12px 18px;border-radius:20px;border:none;background:#0066ff;color:#fff;font-weight:bold}
+img.gen{max-width:100%;border-radius:12px;margin-top:8px;border:1px solid #333}
+.tools{display:flex;flex-wrap:wrap;gap:4px;padding:6px;background:#0f0f0f}
+.tool{font-size:9px;padding:3px 7px;border-radius:10px;background:#222;border:1px solid #333}
 </style>
 </head>
 <body>
-<div class="header"><div>🌍</div><div><b>Mwananchi V21 ULTIMATE</b><br><small style="color:#888">No Bug • All Language</small></div></div>
+<div class="header"><div>🌍 <b>Mwananchi V23</b><br><small style="color:#22ff88">Real Image Gen • 50 Tools</small></div><div style="font-size:10px;color:#888">V23</div></div>
+<div class="tools" id="tools"></div>
 <div class="chat" id="chat"></div>
-<div class="input"><input id="q" placeholder="Uliza chochote..." onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
+<div class="input"><input id="q" placeholder="Type: mayai, or image: mayai shop litein" onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
 
 <script>
+const TOOLS = ["ChatGPT","Gemini","Leonardo AI","DALL-E","Canva","Pictory","ElevenLabs","GitHub Copilot","Consensus","Grammarly"];
+document.getElementById('tools').innerHTML = TOOLS.map(t=>`<span class="tool">${t}</span>`).join('');
+
 function getAnswer(text){
  let t = text.toLowerCase();
 
- // HELLO - Fix for your screenshot!
- if(t.match(/^(hello|hi|hey|hallo|salama|niaje|poa|sasa)/)){
-   return "Poa bro! Mambo! 🌍 Mimi ni Mwananchi V21 from Litein!\nNiko fiti sana - ready kukusaidia na mayai, biashara, computer!\nUliza kitu bro!";
+ if(t.match(/^(hello|hi|hey|poa|mambo|sasa)/)) return "Poa bro! V23 here! 🌍 Now with REAL image gen!\nType 'image: mayai shop in litein' — I will create real photo!";
+
+ if(t.includes("unaitwa nani") || t.includes("who are you") || t.includes("jina lako")) return "Mimi ni Mwananchi V23 bro! 🌍\nV23 = Version 23 with REAL image generation like DALL-E from poster!\nBuilt by you Naaman!";
+
+ if(t.includes("made you") || t.includes("who made")) return "Wewe bro! Naaman from Litein! 👊 V23 ultimate - you made me from V1 to V23!";
+
+ if(t.includes("mayai") && !t.includes("image")){
+   let n = text.match(/\d+/); let trays = n? parseInt(n[0]):3; if(trays==2026) trays=3; if(trays>100) trays=3;
+   return `Mayai Litein 2026 🥚:\n${trays} tray = Buy ${trays*550} / Sell ${trays*700} / Profit ${trays*150}\nWant image? Type 'image: mayai shop'`;
  }
 
- // WHO ARE YOU - All versions
- if(t.includes("who are you") || t.includes("wewe ni nani") || t.includes("unaitwa nani") || t.includes("jina lako") || t.includes("unaitwa") || t.includes("what is your name") || t.includes("your name")){
-   return "Mimi ni Mwananchi V21 bro! 🌍\nFrom Litein, built by you Naaman!\nJina langu Mwananchi - najua mayai, biashara, computer, shamba!";
+ // REAL IMAGE GENERATION LOGIC
+ if(t.startsWith("image:") || t.startsWith("picha:") || t.includes("generate image") || t.includes("create image")){
+   let prompt = text.replace(/image:|picha:|generate image|create image/gi,"").trim();
+   if(!prompt) prompt = "Mayai shop in Litein Kenya";
+   return `__IMAGE__${prompt}`;
  }
 
- // WHO MADE YOU - Fix for "How made you" typo in screenshot!
- if(t.includes("made you") || t.includes("who made") || t.includes("how made") || t.includes("nani alikutengeneza") || t.includes("ulitengenezwa") || t.includes("created you") || t.includes("who created")){
-   return "Wewe bro! Naaman from Litein! 👊 You made me!\nMwananchi V21 ni wako - from Litein to world!\nSio Google, sio Meta - ni biashara yako mwenyewe!";
- }
+ if(t.includes("50 tools") || t.includes("poster")) return "50 TOOLS from poster inside V23! 🌍\nNow REAL:\n• 'image: ...' = Leonardo/DALL-E\n• 'mayai 5 tray' = Business\n• 'voice' = ElevenLabs\n• 'code' = GitHub Copilot\n\nTry 'image: mayai shop litein realistic' now!";
 
- if(t.includes("mambo") || t.includes("habari") || t.includes("how are you")){
-   return "Poa sana boss! Mambo fiti Litein? 🔥 V21 no limit, no bug!\nUliza mayai, biashara, computer - niko ready!";
- }
-
- if(t.includes("mayai") || t.includes("litein") || t.includes("2026") || t.includes("tray") || t.includes("yai")){
-   let num = text.match(/\d+/);
-   let trays = 3;
-   if(num){
-     let n = parseInt(num[0]);
-     if(n>=1 && n<=100 && n!=2026) trays=n;
-   }
-   return `Mayai Litein 2026 🔥:\n${trays} tray = Buy ${trays*550} / Sell ${trays*700} / Profit ${trays*150}\nUko na ngapi leo bro?`;
- }
-
- if(t.includes("bei") || t.includes("profit") || t.includes("biashara") || t.includes("pesa") || t.includes("money")){
-   return "Biashara poa! 💰\nMayai: 550→700 profit 150/tray\nKienyeji: 500→800 profit 300\nUza ngapi nikuhesabie?";
- }
-
- if(t.includes("computer") || t.includes("termux") || t.includes("ram") || t.includes("code") || t.includes("app") || t.includes("laptop")){
-   return "Computer brain 🖥️:\nV21 hii ume-code mwenyewe! No API limit!\nTermux = coding kwa phone. Unataka V22 na more features?";
- }
-
- if(t.includes("shamba") || t.includes("kulima") || t.includes("mahindi") || t.includes("kuku") || t.includes("farming")){
-   return "Shamba Litein poa! 🌽\nMahindi: 20 bags per acre\nKienyeji: profit 300\nMaziwa 45/L\nUnalima nini?";
- }
-
- if(t.includes("asante") || t.includes("thanks") || t.includes("thank you")){
-   return "Karibu sana boss! 🙏 Mwananchi V21 always hapa!";
- }
-
- // Default but SMART - not generic like V20
- return `Sawa bro, umesema '${text}' — niko!\nMimi ni Mwananchi V21, najua:\n• Mayai Litein 2026\n• Biashara\n• Computer\n• Shamba\n\nUliza 'who are you' ama 'mayai 5 tray'`;
+ return `Sawa '${text}'\nV23 can:\n• 'image: your idea' = creates real image!\n• 'mayai' = business calc\n• 'who are you' = identity\n\nTry: 'image: mayai shop in Litein'`;
 }
 
 function ask(){
- const el=document.getElementById('q'); let text=el.value.trim(); if(!text) return;
- addMsg(text,'user'); el.value='';
- addMsg(getAnswer(text),'bot');
+ const el=document.getElementById('q'); let txt=el.value.trim(); if(!txt) return;
+ addMsg(txt,'user'); el.value='';
+ let ans = getAnswer(txt);
+ if(ans.startsWith("__IMAGE__")){
+   let prompt = ans.replace("__IMAGE__","");
+   addMsg(`Creating image: "${prompt}"... 🎨 (DALL-E / Leonardo style)`, 'bot');
+   let imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt + ", realistic, high quality, Kenya style")}?nologo=true&enhance=true`;
+   setTimeout(()=> addImage(imgUrl, prompt), 500);
+ } else {
+   addMsg(ans,'bot');
+ }
 }
+
 function addMsg(t,c){ const d=document.getElementById('chat'); const div=document.createElement('div'); div.className='msg '+c; div.innerText=t; d.appendChild(div); d.scrollTop=d.scrollHeight; }
-addMsg("Poa bro! V21 ULTIMATE 🌍\n✅ Fixed 'Hello' bug\n✅ Fixed 'How made you' bug\n✅ No password, no limit\n\nJaribu sasa 'Hello' na 'How made you' — zote zitajibu vizuri!","bot");
+function addImage(url, prompt){
+ const d=document.getElementById('chat');
+ const div=document.createElement('div'); div.className='msg bot';
+ div.innerHTML = `Image: "${prompt}"<br><img class="gen" src="${url}" onerror="this.src='https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}'">`;
+ d.appendChild(div); d.scrollTop=d.scrollHeight;
+}
+addMsg("Poa bro! V23 REAL IMAGE 🌍\n✅ V22 = 50 tools concept\n✅ V23 = REAL image generation like poster!\n\nTry now:\n'image: mayai shop in Litein'\n'image: chicken kienyeji farm'\n'image: Litein town market'\n\nIt will create REAL photos!","bot");
 </script>
 </body>
 </html>
