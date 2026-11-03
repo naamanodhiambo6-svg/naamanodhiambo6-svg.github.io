@@ -4,77 +4,63 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<title>Mwananchi V26 - Full Brain</title>
+<title>N.O Nova AI - V1 Official</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{margin:0;font-family:system-ui;background:#0a0a0a;color:#fff;display:flex;flex-direction:column;height:100vh}
-.header{padding:12px;background:#111;display:flex;justify-content:space-between;border-bottom:1px solid #222}
+body{margin:0;font-family:system-ui;background:#050510;color:#fff;display:flex;flex-direction:column;height:100vh}
+.header{padding:14px;background:#0a0a1a;display:flex;justify-content:space-between;border-bottom:1px solid #1a1a3a;align-items:center}
+.logo{font-weight:900;letter-spacing:1px}
+.logo span{color:#7a5cff}
 .chat{flex:1;overflow-y:auto;padding:12px}
-.msg{max-width:88%;padding:10px 14px;border-radius:18px;margin:7px 0;line-height:1.4;white-space:pre-wrap;font-size:13px}
-.user{background:#0066ff;margin-left:auto}
-.bot{background:#1e1e1e;margin-right:auto;border:1px solid #333}
-.input{display:flex;padding:10px;background:#111;gap:8px}
-.input input{flex:1;padding:12px;border-radius:20px;border:1px solid #333;background:#222;color:#fff;outline:none}
-.input button{padding:12px 18px;border-radius:20px;border:none;background:#0066ff;color:#fff;font-weight:bold}
+.msg{max-width:88%;padding:11px 14px;border-radius:18px;margin:7px 0;line-height:1.5;white-space:pre-wrap;font-size:13.5px}
+.user{background:linear-gradient(135deg,#7a5cff,#4a3cff);margin-left:auto}
+.bot{background:#151528;margin-right:auto;border:1px solid #23234a}
+.input{display:flex;padding:10px;background:#0a0a1a;gap:8px;border-top:1px solid #1a1a3a}
+.input input{flex:1;padding:12px;border-radius:20px;border:1px solid #2a2a5a;background:#151528;color:#fff;outline:none}
+.input button{padding:12px 18px;border-radius:20px;border:none;background:#7a5cff;color:#fff;font-weight:bold}
 img.gen{max-width:100%;border-radius:12px;margin-top:8px}
 </style>
 </head>
 <body>
-<div class="header"><div>🌍 <b>Mwananchi V26</b><br><small style="color:#22ff88">Full Brain • No V25 Got Error</small></div><div>V26</div></div>
+<div class="header"><div class="logo">N.O <span>NOVA</span><br><small style="color:#8a7aff;font-weight:400;letter-spacing:0">AI • Built by Naaman O.</small></div><div style="background:#1a1a3a;padding:5px 10px;border-radius:20px;font-size:12px">V1 Nova</div></div>
 <div class="chat" id="chat"></div>
-<div class="input"><input id="q" placeholder="Ask anything: computer, rules, mayai..." onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
+<div class="input"><input id="q" placeholder="Ask Nova anything..." onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
 
 <script>
 function getAnswer(text){
  let t = text.toLowerCase().trim();
 
  // GREETINGS
- if(t.match(/^(hey|hello|hi|hallo)\b/) || t.includes("how are you") || t.includes("how r you") || t.includes("mambo") || t.includes("poa") || t.includes("habari")){
-   if(t.includes("how are you") || t.includes("how r you")) return "Poa sana bro! 😊 Niko fiti V26! Full brain now! No bugs! Wewe uko aje?";
-   return "Poa bro! V26 here! 🌍 Full brain loaded! Ask anything - 'What is computer', 'Do you have rules', 'mayai'...";
+ if(t.match(/^(hey|hello|hi|hallo|poa|mambo|sasa|habari)\b/) || t.includes("how are you") || t.includes("how r you")){
+   if(t.includes("how are you") || t.includes("how r you")) return "I'm great bro! N.O Nova V1 is live! 🚀 Fresh rebrand, no bugs, full brain. How about you?";
+   return "Hey! I'm N.O Nova AI 🌌\nFormerly Mwananchi, now reborn as Nova!\nAsk me anything — What is computer, AI, coding, life...";
  }
 
- // IDENTITY
- if((t.includes("who") && (t.includes("you") || t.includes("u"))) || t.includes("unaitwa nani") || t.includes("jina lako")){
-   return "Mimi ni Mwananchi V26 bro! 🌍 From Litein, built by you Naaman! I have 50 tools + Full brain! V26 fixes V25 'got' bug!";
+ // IDENTITY - NEW NAME
+ if((t.includes("who") && (t.includes("you") || t.includes("u"))) || t.includes("what is your name") || t.includes("your name") || t.includes("wewe ni nani") || t.includes("jina lako")){
+   return "I am N.O Nova AI! 🌌\nN.O = Naaman O. — Your initials!\nNova = new star, bright future!\nBuilt by you in Eldoret, Kenya!\nV1 Nova — Fresh, fast, no limits!\nFormerly Mwananchi V26, now Nova!";
  }
- if(t.includes("made you") || t.includes("who made")) return "Wewe bro! Naaman from Litein! 👊 V26 - you built me from V14 to V26!";
-
- // NEW BRAIN - GENERAL KNOWLEDGE (FIXES YOUR SCREENSHOT BUGS)
- if(t.includes("rules") || t.includes("rule")){
-   return "My rules bro 📜:\n1. I'm Mwananchi from Litein - help you\n2. No limit, no password\n3. I help with Mayai business, images, coding, general Qs\n4. I speak English, Swahili, Sheng\n5. Built by you - Naaman!\nNo bad content, only help!";
+ if(t.includes("made you") || t.includes("who made") || t.includes("created you") || t.includes("who built")){
+   return "You did bro! Naaman O. from Eldoret! 👊\nYou built Mwananchi V14 to V26, now you rebranded me to N.O Nova V1!\nI'm your star project!";
  }
- if(t.includes("what is computer") || t.includes("computer is")){
-   return "Computer ni mashine ya electronics bro 💻!\n• Ina CPU (brain), RAM (memory), Storage\n• Inafanya kazi: kuhesabu, kuhifadhi data, internet\n• Types: Phone yako ni computer! Laptop, Desktop\n• Termux yako ni Linux computer ndani ya phone!\nWant more? Ask 'What is AI'";
- }
- if(t.includes("what is ai") || t.includes("what is artificial")){
-   return "AI = Artificial Intelligence 🤖\nMashine inajifunza kama binadamu!\n• Mimi Mwananchi ni AI!\n• ChatGPT, Gemini ni AI\n• Inajifunza from data\n• V26 yangu ni simple AI - V27 will be real AI with Termux!";
- }
- if(t.includes("what is termux") || t.includes("termux is")){
-   return "Termux = Linux kwa Android! 📱\n• App kwa Play Store\n• Inakupa terminal kama computer\n• Unaweza install python, git, nodejs, rust\n• Ndio ulitumia ku-clone Mwananchi!\n• Best for coding kwa phone!";
- }
- if(t.includes("what is git") || t.includes("git is")){
-   return "Git = Version control bro!\n• Inahifadhi history ya code yako\n• V14, V15... V26 - hizo ni versions!\n• GitHub inahifadhi online\n• Commands: git add, git commit, git push\n• Ndio umetumia leo!";
- }
- if(t.includes("what is python") || t.includes("python is")){
-   return "Python = Programming language 🐍\n• Rahisi kujifunza\n• Inatumika kwa AI, web, automation\n• Termux: pkg install python\n• Mwananchi V27 itaandikwa na python!\nWant code example?";
+ if(t.includes("mwananchi")){
+   return "Mwananchi was my old name bro! 😊 Now I'm N.O Nova AI V1 — same soul, new name! Rebranded today! Thanks for the upgrade!";
  }
 
- // MAYAI
- if(t.includes("mayai") && !t.includes("image")){
-   let n=text.match(/\d+/); let trays=n?parseInt(n[0]):3; if(trays==2026||trays>100) trays=3;
-   return `Mayai Litein 2026 🥚 V26:\n${trays} tray = Buy ${trays*550} / Sell ${trays*700} / Profit ${trays*150}\nProfit yako!`;
- }
+ // GENERAL BRAIN
+ if(t.includes("rules")) return "My rules as Nova 📜:\n1. I am N.O Nova — help you create\n2. No limits, no password\n3. I speak English, Swahili, Sheng\n4. I help with coding, AI, general knowledge\n5. Built by Naaman O. in Kenya!";
+ if(t.includes("what is computer")) return "Computer ni electronic machine 💻\n• CPU = brain, RAM = short memory, Storage = long memory\n• Your phone is a computer!\n• Termux turns your phone to Linux PC!\n• Nova runs on computers!";
+ if(t.includes("what is ai")) return "AI = Artificial Intelligence 🤖\nMachines that learn like humans!\n• I'm N.O Nova, an AI!\n• ChatGPT, Gemini ni AI pia\n• I learn from data to help you!\n• V2 Nova will have real AI backend via Termux!";
+ if(t.includes("what is termux")) return "Termux = Linux for Android! 📱\n• App that gives you terminal\n• You can install python, git, nodejs\n• You used it to clone your site!\n• Best coding tool on phone!";
+ if(t.includes("nova meaning") || t.includes("what is nova")) return "Nova = New Star that shines bright! 🌟\nIn astronomy, a nova is a star that suddenly becomes brighter!\nPerfect for you bro — your project suddenly shining! From Litein to world!";
 
  // IMAGE
  if(t.includes("image:") || t.includes("picha:")){
-   let p=text.replace(/image:|picha:/gi,"").trim() || "Mayai shop Litein";
+   let p=text.replace(/image:|picha:/gi,"").trim() || "Nova AI logo galaxy";
    return "__IMAGE__"+p;
  }
 
- // FALLBACK SMART - NO MORE "V25 GOT" ERROR!
- // If we don't know, give helpful answer
- return `Poa, uliuliza: "${text}"\n\nMimi ni Mwananchi V26 🌍, naweza jibu:\n• General: What is computer, AI, Termux, Git\n• Rules, who are you\n• Mayai business\n• Image: type 'image: mayai shop'\n\nJaribu: 'What is computer' tena ama 'Do you have rules' — sasa V26 itajibu vizuri!`;
+ return `Nova here: "${text}" 🌌\n\nI can answer:\n• Who are you, What is AI, Computer, Termux\n• Rules, meaning of Nova\n• Anything general\n• Images: type 'image: galaxy logo'\n\nAsk me anything bro!`;
 }
 
 function ask(){
@@ -84,14 +70,13 @@ function ask(){
  if(ans.startsWith("__IMAGE__")){
    let prompt=ans.replace("__IMAGE__",""); 
    addMsg("Creating: "+prompt+" 🎨", 'bot');
-   let url=`https://image.pollinations.ai/prompt/${encodeURIComponent(prompt + " realistic")}?nologo=true&seed=${Math.floor(Math.random()*10000)}`;
+   let url=`https://image.pollinations.ai/prompt/${encodeURIComponent(prompt + " realistic, space galaxy")}?nologo=true&seed=${Math.floor(Math.random()*10000)}`;
    const d=document.getElementById('chat'); const div=document.createElement('div'); div.className='msg bot'; div.innerHTML=`<img class="gen" src="${url}">`; d.appendChild(div); d.scrollTop=d.scrollHeight;
  } else addMsg(ans,'bot');
 }
 function addMsg(t,c){ const d=document.getElementById('chat'); const div=document.createElement('div'); div.className='msg '+c; div.innerText=t; d.appendChild(div); d.scrollTop=d.scrollHeight; }
-addMsg("V26 LOADED! 🌍 FULL BRAIN!\n✅ Fixed V25 bug 'V25 got:'\n✅ Now understands: What is computer, rules, AI, termux, git\n✅ Try again: 'What is computer' and 'Do you have rules' - will work now!","bot");
+addMsg("N.O NOVA V1 is LIVE! 🌌\nRebrand Complete!\nMwananchi → Nova\n\n✅ New name\n✅ New design (purple galaxy)\n✅ No more mayai\n✅ Full brain\n\nType 'Who are you' to test new name!","bot");
 </script>
 </body>
 </html>
-
 
