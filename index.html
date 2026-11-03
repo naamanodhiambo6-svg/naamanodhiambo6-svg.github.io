@@ -2,8 +2,7 @@
 <!DOCTYPE html>
 <html><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Cache-Control" content="no-cache">
-<title>N.O Nova V3 - Real AI</title>
+<title>N.O NOVA V3.1 - Real AI Fixed</title>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#050510;color:#fff;display:flex;flex-direction:column;height:100dvh}
 .h{padding:10px 14px;background:#0a0a1a;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1a1a3a}
@@ -13,31 +12,30 @@
 .msg{max-width:88%;padding:10px 14px;border-radius:18px;margin:6px 0;line-height:1.5;font-size:14px;white-space:pre-wrap}
 .user{background:linear-gradient(135deg,#7a5cff,#4a3cff);margin-left:auto;border-bottom-right-radius:5px}
 .bot{background:#151528;border:1px solid #23234a;margin-right:auto;border-bottom-left-radius:5px}
-.input{position:fixed;bottom:0;left:0;right:0;background:#0a0a1a;padding:8px;display:flex;gap:6px;border-top:1px solid #1a1a3a;align-items:center}
+.input{position:fixed;bottom:0;left:0;right:0;background:#0a0a1a;padding:8px;display:flex;gap:6px;border-top:1px solid #1a1a3a}
 .input input[type=text]{flex:1;padding:12px;border-radius:24px;border:1px solid #2a2a5a;background:#151528;color:#fff;outline:none}
 .btn{border:none;border-radius:50%;width:42px;height:42px;cursor:pointer;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center}
 .send{background:linear-gradient(135deg,#7a5cff,#4a3cff)} .mic{background:#23234a} .upload{background:#23234a}
 .settings{position:fixed;top:50px;right:10px;background:#111126;border:1px solid #2a2a5a;padding:12px;border-radius:12px;display:none;z-index:20;width:290px}
 .settings input{width:100%;padding:10px;border-radius:8px;border:1px solid #2a2a5a;background:#151528;color:#fff;margin:6px 0;font-size:13px}
-img.gen{max-width:100%;border-radius:12px;margin-top:6px;border:1px solid #333}
 </style>
 </head><body>
 <div class="h">
-<div class="logo">N.O <span>NOVA</span><br><small>V3 REAL AI • By Naaman O.</small></div>
+<div class="logo">N.O <span>NOVA</span><br><small>V3.1 REAL AI • Fixed</small></div>
 <div class="badge" onclick="toggleSet()">⚙️ API Key</div>
 </div>
 <div class="settings" id="setBox">
-<b>🔑 Gemini API Key (Free)</b><br><small style="opacity:.7">You already have one ending x8kQ</small>
+<b>🔑 Gemini API Key</b><br><small style="opacity:.7">Must start with AIzaSy... end x8kQ</small>
 <input id="apiKey" type="text" placeholder="Paste AIzaSy... here">
 <button onclick="saveKey()" style="width:100%;padding:10px;border-radius:8px;border:none;background:#7a5cff;color:#fff;margin-top:6px;font-weight:bold">Save & Enable Real Brain</button>
 <small id="keyStatus" style="color:#8a7aff;display:block;margin-top:6px"></small>
-<br><button onclick="clearChat()" style="width:100%;padding:8px;border-radius:8px;background:#23234a;color:#fff;border:none">Clear Chat Memory</button>
+<br><button onclick="clearChat()" style="width:100%;padding:8px;border-radius:8px;background:#23234a;color:#fff;border:none">Clear Chat</button>
 </div>
 <div class="chat" id="chat"></div>
 <div class="input">
-<label class="btn upload">📎<input type="file" id="fileIn" accept="image/*" hidden onchange="handleFile(event)"></label>
+<label class="btn upload">📎<input type="file" id="fileIn" accept="image/*" hidden></label>
 <button class="btn mic" id="micBtn" onclick="toggleMic()">🎤</button>
-<input id="q" type="text" placeholder="Ask Nova anything..." onkeydown="if(event.key==='Enter')ask()">
+<input id="q" type="text" placeholder="Ask Nova..." onkeydown="if(event.key==='Enter')ask()">
 <button class="btn send" onclick="ask()">➤</button>
 </div>
 <script>
@@ -45,21 +43,20 @@ let apiKey = localStorage.getItem('nova_gemini_key') || '';
 let messages = JSON.parse(localStorage.getItem('nova_chat') || '[]');
 const chatEl = document.getElementById('chat');
 document.getElementById('apiKey').value = apiKey;
-document.getElementById('keyStatus').innerText = apiKey ? "✅ Real Brain Ready" : "⚠️ Paste key you copied (x8kQ)";
+document.getElementById('keyStatus').innerText = apiKey ? "✅ Key saved: "+apiKey.substring(0,8)+"..."+apiKey.slice(-4) : "⚠️ Paste AIzaSy key";
 function toggleSet(){let b=document.getElementById('setBox'); b.style.display=b.style.display==='block'?'none':'block';}
-function saveKey(){let k=document.getElementById('apiKey').value.trim(); if(!k){alert('Paste your AIzaSy key');return;} localStorage.setItem('nova_gemini_key',k); apiKey=k; document.getElementById('keyStatus').innerText="✅ Saved! Real Brain Active"; toggleSet();}
-function clearChat(){localStorage.removeItem('nova_chat'); messages=[]; chatEl.innerHTML=''; addMsg('Memory cleared!','bot');}
+function saveKey(){let k=document.getElementById('apiKey').value.trim().replace(/['"]/g,''); if(!k.startsWith('AIza')){alert('Wrong key! Must start with AIzaSy. Go to aistudio.google.com/app/apikey and copy the one ending x8kQ');return;} localStorage.setItem('nova_gemini_key',k); apiKey=k; document.getElementById('keyStatus').innerText="✅ Saved! "+k.slice(-4); toggleSet(); addMsg("✅ Real Brain Activated! Gemini 2.0 Flash ready! Ask me anything bro!","bot");}
+function clearChat(){localStorage.removeItem('nova_chat'); messages=[]; chatEl.innerHTML=''; addMsg('Cleared!','bot');}
 function saveHistory(){localStorage.setItem('nova_chat', JSON.stringify(messages.slice(-40)));}
 function addMsg(t,w){let d=document.createElement('div'); d.className='msg '+w; d.innerText=t; chatEl.appendChild(d); chatEl.scrollTop=chatEl.scrollHeight; messages.push({role:w,text:t}); saveHistory(); return d;}
-function addHTML(h,w){let d=document.createElement('div'); d.className='msg '+w; d.innerHTML=h; chatEl.appendChild(d); chatEl.scrollTop=chatEl.scrollHeight; return d;}
 messages.forEach(m=>{let d=document.createElement('div'); d.className='msg '+m.role; d.innerText=m.text; chatEl.appendChild(d);});
-if(messages.length==0) addMsg("N.O NOVA V3 — REAL AI LIVE! 🚀\n\nBro you have Gemini key (x8kQ) — paste it in ⚙️ top right to unlock FULL power!\n\nWhat I can do now:\n✅ Answer ANYTHING (coding, homework, love, farming)\n✅ Remember chat even after close\n✅ Voice 🎤 tap mic\n✅ Images 📎 + image: cat\n✅ Speaks back\n\nPaste key then ask me!","bot");
+if(messages.length==0) addMsg("N.O NOVA V3.1 FIXED! 🚀\n\n1. Tap ⚙️ top right\n2. Paste your AIzaSy...x8kQ key (NOT the AQ... one)\n3. Save\n\nThen ask me!","bot");
 async function callAI(prompt){
-if(!apiKey){
+if(!apiKey || !apiKey.startsWith('AIza')){
 let r=await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}?model=openai`); return await r.text();
 }
-let url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-let body={contents:[{parts:[{text:`You are N.O Nova AI, built by Naaman O. in Eldoret Kenya. Friendly, Sheng, concise. User: ${prompt}` }]}]};
+let url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=`+apiKey;
+let body={contents:[{parts:[{text:`You are N.O Nova, built by Naaman O. in Eldoret, Kenya. Be friendly, helpful, use Sheng sometimes. User: ${prompt}` }]}]};
 let res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
 let j=await res.json(); if(j.error) throw new Error(j.error.message);
 return j.candidates?.[0]?.content?.parts?.[0]?.text||"No reply";
@@ -67,25 +64,15 @@ return j.candidates?.[0]?.content?.parts?.[0]?.text||"No reply";
 async function ask(){
 let q=document.getElementById('q'); let txt=q.value.trim(); if(!txt) return;
 addMsg(txt,'user'); q.value='';
-if(txt.toLowerCase().startsWith('image:')){
-let p=txt.replace(/image:/i,'').trim(); addMsg('Generating: '+p+' 🎨','bot');
-let img=`https://image.pollinations.ai/prompt/${encodeURIComponent(p)}?width=512&height=512&nologo=true&seed=${Date.now()}`;
-addHTML(`🎨 ${p}<br><img class="gen" src="${img}">`,'bot'); return;
-}
 let think=addMsg('Nova thinking... 💭','bot');
-try{let ans=await callAI(txt); chatEl.removeChild(think); addMsg(ans,'bot');}catch(e){chatEl.removeChild(think); addMsg('Error: '+e.message,'bot');}
+try{let ans=await callAI(txt); chatEl.removeChild(think); addMsg(ans,'bot');}catch(e){chatEl.removeChild(think); addMsg('Error: '+e.message+'\n\nFix: Check your key is AIzaSy... not AQ... Go to aistudio.google.com/app/apikey','bot');}
 }
 let rec,listening=false;
 function toggleMic(){
 let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-if(!SR){alert('Voice not supported');return;}
+if(!SR){alert('No mic support');return;}
 if(!rec){rec=new SR(); rec.lang='en-KE'; rec.onresult=(e)=>{document.getElementById('q').value=e.results[0][0].transcript; ask();}; rec.onend=()=>{listening=false; document.getElementById('micBtn').style.background='#23234a';}}
 if(!listening){rec.start(); listening=true; document.getElementById('micBtn').style.background='#7a5cff';}else{rec.stop();}
 }
-function handleFile(e){
-let f=e.target.files[0]; if(!f) return;
-let r=new FileReader(); r.onload=()=>{addHTML(`📎 Uploaded<br><img class="gen" src="${r.result}">`,'user'); addMsg('Nice! What should I do with this image?','bot');}; r.readAsDataURL(f);
-}
 </script>
 </body></html>
-
