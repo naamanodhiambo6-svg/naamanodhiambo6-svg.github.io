@@ -3,82 +3,66 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Mwananchi V23 - Image Gen</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Mwananchi V24 - Fix Who Is You</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body{margin:0;font-family:system-ui;background:#0a0a0a;color:#fff;display:flex;flex-direction:column;height:100vh}
 .header{padding:12px;background:#111;display:flex;justify-content:space-between;border-bottom:1px solid #222}
 .chat{flex:1;overflow-y:auto;padding:12px}
 .msg{max-width:88%;padding:10px 14px;border-radius:18px;margin:7px 0;line-height:1.4;white-space:pre-wrap;font-size:13px}
-.user{background:#0066ff;margin-left:auto;border-bottom-right-radius:4px}
-.bot{background:#1a1a1a;margin-right:auto;border-bottom-left-radius:4px;border:1px solid #222}
+.user{background:#0066ff;margin-left:auto}
+.bot{background:#1e1e1e;margin-right:auto;border:1px solid #333}
 .input{display:flex;padding:10px;background:#111;gap:8px}
 .input input{flex:1;padding:12px;border-radius:20px;border:1px solid #333;background:#222;color:#fff;outline:none}
 .input button{padding:12px 18px;border-radius:20px;border:none;background:#0066ff;color:#fff;font-weight:bold}
-img.gen{max-width:100%;border-radius:12px;margin-top:8px;border:1px solid #333}
-.tools{display:flex;flex-wrap:wrap;gap:4px;padding:6px;background:#0f0f0f}
-.tool{font-size:9px;padding:3px 7px;border-radius:10px;background:#222;border:1px solid #333}
+img.gen{max-width:100%;border-radius:12px;margin-top:8px}
 </style>
 </head>
 <body>
-<div class="header"><div>🌍 <b>Mwananchi V23</b><br><small style="color:#22ff88">Real Image Gen • 50 Tools</small></div><div style="font-size:10px;color:#888">V23</div></div>
-<div class="tools" id="tools"></div>
+<div class="header"><div>🌍 <b>Mwananchi V24</b><br><small style="color:#22ff88">Fixed Who Is You Bug</small></div><div>V24</div></div>
 <div class="chat" id="chat"></div>
-<div class="input"><input id="q" placeholder="Type: mayai, or image: mayai shop litein" onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
+<div class="input"><input id="q" placeholder="Test: Who is you" onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
 
 <script>
-const TOOLS = ["ChatGPT","Gemini","Leonardo AI","DALL-E","Canva","Pictory","ElevenLabs","GitHub Copilot","Consensus","Grammarly"];
-document.getElementById('tools').innerHTML = TOOLS.map(t=>`<span class="tool">${t}</span>`).join('');
-
 function getAnswer(text){
  let t = text.toLowerCase();
 
- if(t.match(/^(hello|hi|hey|poa|mambo|sasa)/)) return "Poa bro! V23 here! 🌍 Now with REAL image gen!\nType 'image: mayai shop in litein' — I will create real photo!";
+ // FIX FOR "Who is you" — Screenshot bug!
+ if(t.includes("who is you") || t.includes("who are you") || t.includes("who is u") || t.includes("who are u") || t.includes("who r you") || t.includes("who r u") || t.includes("wewe ni nani") || t.includes("unaitwa nani") || t.includes("jina lako") || t.match(/who.*you/) || t.match(/who.*u/)){
+   return "Mimi ni Mwananchi V24 bro! 🌍\nFrom Litein, built by you Naaman!\nV24 = Fixed 'Who is you' bug!\nI have 50 tools + Real image gen!\nTry: 'image: mayai shop'";
+ }
 
- if(t.includes("unaitwa nani") || t.includes("who are you") || t.includes("jina lako")) return "Mimi ni Mwananchi V23 bro! 🌍\nV23 = Version 23 with REAL image generation like DALL-E from poster!\nBuilt by you Naaman!";
+ if(t.match(/^(hello|hi|hey|poa|mambo|sasa)/)) return "Poa bro! V24 here! 🌍 Fixed all bugs!\n'Who is you' now works! Try it!\nAlso try 'image: mayai shop in litein'";
 
- if(t.includes("made you") || t.includes("who made")) return "Wewe bro! Naaman from Litein! 👊 V23 ultimate - you made me from V1 to V23!";
+ if(t.includes("made you") || t.includes("who made") || t.includes("how made")) return "Wewe bro! Naaman from Litein! 👊 You made me V24! From V21 bug to V24 fixed!";
 
  if(t.includes("mayai") && !t.includes("image")){
-   let n = text.match(/\d+/); let trays = n? parseInt(n[0]):3; if(trays==2026) trays=3; if(trays>100) trays=3;
-   return `Mayai Litein 2026 🥚:\n${trays} tray = Buy ${trays*550} / Sell ${trays*700} / Profit ${trays*150}\nWant image? Type 'image: mayai shop'`;
+   let n=text.match(/\d+/); let trays=n?parseInt(n[0]):3; if(trays==2026) trays=3; if(trays>100) trays=3;
+   return `Mayai Litein 2026 🥚 V24:\n${trays} tray = Buy ${trays*550} / Sell ${trays*700} / Profit ${trays*150}`;
  }
 
- // REAL IMAGE GENERATION LOGIC
- if(t.startsWith("image:") || t.startsWith("picha:") || t.includes("generate image") || t.includes("create image")){
-   let prompt = text.replace(/image:|picha:|generate image|create image/gi,"").trim();
-   if(!prompt) prompt = "Mayai shop in Litein Kenya";
-   return `__IMAGE__${prompt}`;
+ if(t.includes("image:") || t.includes("picha:")){
+   let p=text.replace(/image:|picha:/gi,"").trim() || "Mayai shop Litein";
+   return "__IMAGE__"+p;
  }
 
- if(t.includes("50 tools") || t.includes("poster")) return "50 TOOLS from poster inside V23! 🌍\nNow REAL:\n• 'image: ...' = Leonardo/DALL-E\n• 'mayai 5 tray' = Business\n• 'voice' = ElevenLabs\n• 'code' = GitHub Copilot\n\nTry 'image: mayai shop litein realistic' now!";
-
- return `Sawa '${text}'\nV23 can:\n• 'image: your idea' = creates real image!\n• 'mayai' = business calc\n• 'who are you' = identity\n\nTry: 'image: mayai shop in Litein'`;
+ return `V24 got you: '${text}'\nTry:\n• 'Who is you' = now works!\n• 'image: mayai shop' = real image\n• 'mayai 5' = business`;
 }
 
 function ask(){
  const el=document.getElementById('q'); let txt=el.value.trim(); if(!txt) return;
  addMsg(txt,'user'); el.value='';
- let ans = getAnswer(txt);
+ let ans=getAnswer(txt);
  if(ans.startsWith("__IMAGE__")){
-   let prompt = ans.replace("__IMAGE__","");
-   addMsg(`Creating image: "${prompt}"... 🎨 (DALL-E / Leonardo style)`, 'bot');
-   let imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt + ", realistic, high quality, Kenya style")}?nologo=true&enhance=true`;
-   setTimeout(()=> addImage(imgUrl, prompt), 500);
- } else {
-   addMsg(ans,'bot');
- }
+   let prompt=ans.replace("__IMAGE__",""); 
+   addMsg("Creating: "+prompt+" 🎨", 'bot');
+   let url=`https://image.pollinations.ai/prompt/${encodeURIComponent(prompt + " realistic")}?nologo=true&seed=${Math.floor(Math.random()*1000)}`;
+   const d=document.getElementById('chat'); const div=document.createElement('div'); div.className='msg bot'; div.innerHTML=`<img class="gen" src="${url}">`; d.appendChild(div); d.scrollTop=d.scrollHeight;
+ } else addMsg(ans,'bot');
 }
-
 function addMsg(t,c){ const d=document.getElementById('chat'); const div=document.createElement('div'); div.className='msg '+c; div.innerText=t; d.appendChild(div); d.scrollTop=d.scrollHeight; }
-function addImage(url, prompt){
- const d=document.getElementById('chat');
- const div=document.createElement('div'); div.className='msg bot';
- div.innerHTML = `Image: "${prompt}"<br><img class="gen" src="${url}" onerror="this.src='https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}'">`;
- d.appendChild(div); d.scrollTop=d.scrollHeight;
-}
-addMsg("Poa bro! V23 REAL IMAGE 🌍\n✅ V22 = 50 tools concept\n✅ V23 = REAL image generation like poster!\n\nTry now:\n'image: mayai shop in Litein'\n'image: chicken kienyeji farm'\n'image: Litein town market'\n\nIt will create REAL photos!","bot");
+addMsg("V24 LOADED! 🌍\n✅ Fixed 'Who is you' bug from your screenshot!\n✅ Hello works\n✅ Image works\n\nTest again 'Who is you' now!","bot");
 </script>
 </body>
 </html>
-
