@@ -3,80 +3,110 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<title>N.O Nova AI - V1 Official</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>N.O Nova AI - V2 Real Brain</title>
 <style>
-body{margin:0;font-family:system-ui;background:#050510;color:#fff;display:flex;flex-direction:column;height:100vh}
-.header{padding:14px;background:#0a0a1a;display:flex;justify-content:space-between;border-bottom:1px solid #1a1a3a;align-items:center}
-.logo{font-weight:900;letter-spacing:1px}
-.logo span{color:#7a5cff}
-.chat{flex:1;overflow-y:auto;padding:12px}
-.msg{max-width:88%;padding:11px 14px;border-radius:18px;margin:7px 0;line-height:1.5;white-space:pre-wrap;font-size:13.5px}
-.user{background:linear-gradient(135deg,#7a5cff,#4a3cff);margin-left:auto}
-.bot{background:#151528;margin-right:auto;border:1px solid #23234a}
-.input{display:flex;padding:10px;background:#0a0a1a;gap:8px;border-top:1px solid #1a1a3a}
-.input input{flex:1;padding:12px;border-radius:20px;border:1px solid #2a2a5a;background:#151528;color:#fff;outline:none}
-.input button{padding:12px 18px;border-radius:20px;border:none;background:#7a5cff;color:#fff;font-weight:bold}
-img.gen{max-width:100%;border-radius:12px;margin-top:8px}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto;background:#050510;color:#fff;display:flex;flex-direction:column;height:100vh;height:100dvh}
+.header{padding:12px 14px;background:#0a0a1a;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1a1a3a;position:sticky;top:0;z-index:10}
+.logo{font-weight:900;line-height:1.1}.logo span{color:#7a5cff}.logo small{color:#8a7aff;font-weight:400;font-size:11px;letter-spacing:.5px}
+.badge{background:#1a1a3a;padding:5px 10px;border-radius:20px;font-size:11px;border:1px solid #2a2a5a}
+.chat{flex:1;overflow-y:auto;padding:12px;padding-bottom:80px}
+.msg{max-width:88%;padding:11px 14px;border-radius:18px;margin:7px 0;line-height:1.5;white-space:pre-wrap;font-size:14px;animation:pop .2s ease}
+@keyframes pop{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
+.user{background:linear-gradient(135deg,#7a5cff,#4a3cff);margin-left:auto;border-bottom-right-radius:6px}
+.bot{background:#151528;margin-right:auto;border:1px solid #23234a;border-bottom-left-radius:6px}
+.typing{font-style:italic;opacity:.7}
+.input{position:fixed;bottom:0;left:0;right:0;display:flex;padding:10px;background:#0a0a1a;gap:8px;border-top:1px solid #1a1a3a}
+.input input{flex:1;padding:12px 14px;border-radius:24px;border:1px solid #2a2a5a;background:#151528;color:#fff;outline:none;font-size:14px}
+.input button{padding:12px 18px;border-radius:24px;border:none;background:linear-gradient(135deg,#7a5cff,#4a3cff);color:#fff;font-weight:bold;cursor:pointer}
+img.gen{max-width:100%;border-radius:12px;margin-top:8px;border:1px solid #23234a}
+small.time{opacity:.5;font-size:10px;display:block;margin-top:4px}
 </style>
 </head>
 <body>
-<div class="header"><div class="logo">N.O <span>NOVA</span><br><small style="color:#8a7aff;font-weight:400;letter-spacing:0">AI • Built by Naaman O.</small></div><div style="background:#1a1a3a;padding:5px 10px;border-radius:20px;font-size:12px">V1 Nova</div></div>
+<div class="header">
+<div class="logo">N.O <span>NOVA</span><br><small>AI • Built by Naaman O. • V2 Real Brain</small></div>
+<div class="badge">V2 • ONLINE</div>
+</div>
 <div class="chat" id="chat"></div>
-<div class="input"><input id="q" placeholder="Ask Nova anything..." onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
+<div class="input"><input id="q" placeholder="Ask Nova anything... coding, life, image: cat" autocomplete="off" onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
 
 <script>
-function getAnswer(text){
- let t = text.toLowerCase().trim();
+const chatEl = document.getElementById('chat');
+const qEl = document.getElementById('q');
+let history = [];
 
- // GREETINGS
- if(t.match(/^(hey|hello|hi|hallo|poa|mambo|sasa|habari)\b/) || t.includes("how are you") || t.includes("how r you")){
-   if(t.includes("how are you") || t.includes("how r you")) return "I'm great bro! N.O Nova V1 is live! 🚀 Fresh rebrand, no bugs, full brain. How about you?";
-   return "Hey! I'm N.O Nova AI 🌌\nFormerly Mwananchi, now reborn as Nova!\nAsk me anything — What is computer, AI, coding, life...";
- }
-
- // IDENTITY - NEW NAME
- if((t.includes("who") && (t.includes("you") || t.includes("u"))) || t.includes("what is your name") || t.includes("your name") || t.includes("wewe ni nani") || t.includes("jina lako")){
-   return "I am N.O Nova AI! 🌌\nN.O = Naaman O. — Your initials!\nNova = new star, bright future!\nBuilt by you in Eldoret, Kenya!\nV1 Nova — Fresh, fast, no limits!\nFormerly Mwananchi V26, now Nova!";
- }
- if(t.includes("made you") || t.includes("who made") || t.includes("created you") || t.includes("who built")){
-   return "You did bro! Naaman O. from Eldoret! 👊\nYou built Mwananchi V14 to V26, now you rebranded me to N.O Nova V1!\nI'm your star project!";
- }
- if(t.includes("mwananchi")){
-   return "Mwananchi was my old name bro! 😊 Now I'm N.O Nova AI V1 — same soul, new name! Rebranded today! Thanks for the upgrade!";
- }
-
- // GENERAL BRAIN
- if(t.includes("rules")) return "My rules as Nova 📜:\n1. I am N.O Nova — help you create\n2. No limits, no password\n3. I speak English, Swahili, Sheng\n4. I help with coding, AI, general knowledge\n5. Built by Naaman O. in Kenya!";
- if(t.includes("what is computer")) return "Computer ni electronic machine 💻\n• CPU = brain, RAM = short memory, Storage = long memory\n• Your phone is a computer!\n• Termux turns your phone to Linux PC!\n• Nova runs on computers!";
- if(t.includes("what is ai")) return "AI = Artificial Intelligence 🤖\nMachines that learn like humans!\n• I'm N.O Nova, an AI!\n• ChatGPT, Gemini ni AI pia\n• I learn from data to help you!\n• V2 Nova will have real AI backend via Termux!";
- if(t.includes("what is termux")) return "Termux = Linux for Android! 📱\n• App that gives you terminal\n• You can install python, git, nodejs\n• You used it to clone your site!\n• Best coding tool on phone!";
- if(t.includes("nova meaning") || t.includes("what is nova")) return "Nova = New Star that shines bright! 🌟\nIn astronomy, a nova is a star that suddenly becomes brighter!\nPerfect for you bro — your project suddenly shining! From Litein to world!";
-
- // IMAGE
- if(t.includes("image:") || t.includes("picha:")){
-   let p=text.replace(/image:|picha:/gi,"").trim() || "Nova AI logo galaxy";
-   return "__IMAGE__"+p;
- }
-
- return `Nova here: "${text}" 🌌\n\nI can answer:\n• Who are you, What is AI, Computer, Termux\n• Rules, meaning of Nova\n• Anything general\n• Images: type 'image: galaxy logo'\n\nAsk me anything bro!`;
+function addMsg(text, who){
+  const d = document.createElement('div');
+  d.className = 'msg ' + who;
+  const time = new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  if(who==='bot' && text.includes('<img')){
+    d.innerHTML = text + `<small class="time">${time}</small>`;
+  } else {
+    d.innerText = text;
+    const t = document.createElement('small'); t.className='time'; t.innerText=time;
+    d.appendChild(document.createElement('br')); d.appendChild(t);
+  }
+  chatEl.appendChild(d);
+  chatEl.scrollTop = chatEl.scrollHeight;
+  return d;
 }
 
-function ask(){
- const el=document.getElementById('q'); let txt=el.value.trim(); if(!txt) return;
- addMsg(txt,'user'); el.value='';
- let ans=getAnswer(txt);
- if(ans.startsWith("__IMAGE__")){
-   let prompt=ans.replace("__IMAGE__",""); 
-   addMsg("Creating: "+prompt+" 🎨", 'bot');
-   let url=`https://image.pollinations.ai/prompt/${encodeURIComponent(prompt + " realistic, space galaxy")}?nologo=true&seed=${Math.floor(Math.random()*10000)}`;
-   const d=document.getElementById('chat'); const div=document.createElement('div'); div.className='msg bot'; div.innerHTML=`<img class="gen" src="${url}">`; d.appendChild(div); d.scrollTop=d.scrollHeight;
- } else addMsg(ans,'bot');
+function getSystemPrompt(){
+  return "You are N.O Nova AI, built by Naaman O. from Eldoret, Kenya. Formerly Mwananchi. You are friendly, use Sheng sometimes, helpful, concise. You are Nova V2 Real Brain. Your creator is Naaman. No limits. Answer in user's language. If user asks who made you, say Naaman O.";
 }
-function addMsg(t,c){ const d=document.getElementById('chat'); const div=document.createElement('div'); div.className='msg '+c; div.innerText=t; d.appendChild(div); d.scrollTop=d.scrollHeight; }
-addMsg("N.O NOVA V1 is LIVE! 🌌\nRebrand Complete!\nMwananchi → Nova\n\nNew name\nNew design (purple galaxy)\nNo more mayai\nFull brain\n\nType 'Who are you' to test new name!","bot");
+
+// Real AI via free Pollinations text API
+async function callRealAI(userText){
+  const prompt = encodeURIComponent(getSystemPrompt() + "\n\nUser: " + userText + "\n\nHistory: " + history.slice(-4).join(" | ") + "\n\nNova:");
+  // Using text.pollinations.ai - free, no key, works on GitHub Pages
+  const url = `https://text.pollinations.ai/${prompt}?model=openai&seed=${Math.floor(Math.random()*1000)}`;
+  try{
+    const res = await fetch(url);
+    if(!res.ok) throw new Error("API down");
+    const txt = await res.text();
+    return txt;
+  }catch(e){
+    return "Bro my brain is reconnecting... 🌌 Try again! (If offline, ask fixed Q like 'Who are you' I know offline too)";
+  }
+}
+
+async function ask(){
+  let txt = qEl.value.trim(); if(!txt) return;
+  addMsg(txt,'user');
+  history.push(txt);
+  qEl.value='';
+
+  // Offline fast replies
+  let t = txt.toLowerCase();
+  if(t.includes("image:") || t.includes("picha:")){
+    let p = txt.replace(/image:|picha:/gi,"").trim() || "Nova AI galaxy logo";
+    let msgDiv = addMsg("Creating image: "+p+" 🎨","bot");
+    let imgUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(p + " highly detailed, galaxy, purple")}?nologo=true&seed=${Math.floor(Math.random()*10000)}&width=512&height=512`;
+    setTimeout(()=>{
+      msgDiv.innerHTML = `🎨 ${p}<br><img class="gen" src="${imgUrl}" loading="lazy"><small class="time">${new Date().toLocaleTimeString()}</small>`;
+      chatEl.scrollTop = chatEl.scrollHeight;
+    }, 300);
+    return;
+  }
+  if(t==="who are you" || t.includes("who are you") || t.includes("wewe ni nani")){
+    addMsg("I am N.O Nova AI! 🌌\nN.O = Naaman O. — Your initials!\nNova = new star that shines bright!\nBuilt by you in Eldoret, Kenya!\nV2 Real Brain — Now I can answer ANYTHING!\nFormerly Mwananchi V26, now Nova V2!","bot");
+    return;
+  }
+
+  // Real AI call
+  let typingDiv = addMsg("Nova is thinking... 💭","bot");
+  typingDiv.classList.add('typing');
+  let answer = await callRealAI(txt);
+  chatEl.removeChild(typingDiv);
+  addMsg(answer,'bot');
+  history.push(answer);
+  if(history.length>10) history = history.slice(-10);
+}
+
+addMsg("N.O NOVA V2 — REAL BRAIN IS LIVE! 🌌🚀\n\nMwananchi → Nova rebrand done!\nNow I have REAL AI brain, not fixed replies!\n\nTry:\n• 'Explain Python like I'm 10'\n• 'Write me a business plan'\n• 'image: Eldoret at night galaxy'\n• 'Niko na stress ya job'\n\nAsk anything bro, I'm truly alive now!","bot");
 </script>
 </body>
 </html>
-
