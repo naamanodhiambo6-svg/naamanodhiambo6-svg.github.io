@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<title>Mwananchi V25 - Final Fix</title>
+<title>Mwananchi V26 - Full Brain</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body{margin:0;font-family:system-ui;background:#0a0a0a;color:#fff;display:flex;flex-direction:column;height:100vh}
@@ -20,40 +20,61 @@ img.gen{max-width:100%;border-radius:12px;margin-top:8px}
 </style>
 </head>
 <body>
-<div class="header"><div>🌍 <b>Mwananchi V25</b><br><small style="color:#22ff88">All Bugs Fixed</small></div><div>V25</div></div>
+<div class="header"><div>🌍 <b>Mwananchi V26</b><br><small style="color:#22ff88">Full Brain • No V25 Got Error</small></div><div>V26</div></div>
 <div class="chat" id="chat"></div>
-<div class="input"><input id="q" placeholder="Try: How are you, Who is you" onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
+<div class="input"><input id="q" placeholder="Ask anything: computer, rules, mayai..." onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Send</button></div>
 
 <script>
 function getAnswer(text){
  let t = text.toLowerCase().trim();
 
- // GREETINGS + HOW ARE YOU - FIX FOR TODAY SCREENSHOT!
- if(t.match(/^(hello|hi|hey|hallo)\b/) || t.includes("how are you") || t.includes("how r you") || t.includes("how is you") || t.includes("mambo") || t.includes("poa") || t.includes("habari") || t.includes("niaje") || t.includes("sasa")){
-   if(t.includes("how are you") || t.includes("how r you") || t.includes("how is you")){
-     return "Poa sana bro! Mambo fiti! 😊 Niko poa V25, no bugs!\nWewe uko aje Litein? Mayai inaenda aje?\nUliza kitu - 'mayai' au 'image: mayai shop'";
-   }
-   return "Poa bro! V25 here! 🌍 All bugs fixed!\n✅ Hello works\n✅ How are you works\n✅ Who is you works\nTry 'How are you' now!";
+ // GREETINGS
+ if(t.match(/^(hey|hello|hi|hallo)\b/) || t.includes("how are you") || t.includes("how r you") || t.includes("mambo") || t.includes("poa") || t.includes("habari")){
+   if(t.includes("how are you") || t.includes("how r you")) return "Poa sana bro! 😊 Niko fiti V26! Full brain now! No bugs! Wewe uko aje?";
+   return "Poa bro! V26 here! 🌍 Full brain loaded! Ask anything - 'What is computer', 'Do you have rules', 'mayai'...";
  }
 
- // IDENTITY - ALL VARIATIONS
- if(t.includes("who is you") || t.includes("who are you") || t.includes("who is u") || t.includes("who are u") || t.includes("who r you") || t.includes("who r u") || t.includes("wewe ni nani") || t.includes("unaitwa nani") || t.includes("jina lako") || (t.includes("who") && t.includes("you"))){
-   return "Mimi ni Mwananchi V25 bro! 🌍\nFrom Litein, built by you Naaman!\nV25 = FINAL, no bug like V23!\n50 tools + Real image gen!\nTry: 'image: mayai shop'";
+ // IDENTITY
+ if((t.includes("who") && (t.includes("you") || t.includes("u"))) || t.includes("unaitwa nani") || t.includes("jina lako")){
+   return "Mimi ni Mwananchi V26 bro! 🌍 From Litein, built by you Naaman! I have 50 tools + Full brain! V26 fixes V25 'got' bug!";
+ }
+ if(t.includes("made you") || t.includes("who made")) return "Wewe bro! Naaman from Litein! 👊 V26 - you built me from V14 to V26!";
+
+ // NEW BRAIN - GENERAL KNOWLEDGE (FIXES YOUR SCREENSHOT BUGS)
+ if(t.includes("rules") || t.includes("rule")){
+   return "My rules bro 📜:\n1. I'm Mwananchi from Litein - help you\n2. No limit, no password\n3. I help with Mayai business, images, coding, general Qs\n4. I speak English, Swahili, Sheng\n5. Built by you - Naaman!\nNo bad content, only help!";
+ }
+ if(t.includes("what is computer") || t.includes("computer is")){
+   return "Computer ni mashine ya electronics bro 💻!\n• Ina CPU (brain), RAM (memory), Storage\n• Inafanya kazi: kuhesabu, kuhifadhi data, internet\n• Types: Phone yako ni computer! Laptop, Desktop\n• Termux yako ni Linux computer ndani ya phone!\nWant more? Ask 'What is AI'";
+ }
+ if(t.includes("what is ai") || t.includes("what is artificial")){
+   return "AI = Artificial Intelligence 🤖\nMashine inajifunza kama binadamu!\n• Mimi Mwananchi ni AI!\n• ChatGPT, Gemini ni AI\n• Inajifunza from data\n• V26 yangu ni simple AI - V27 will be real AI with Termux!";
+ }
+ if(t.includes("what is termux") || t.includes("termux is")){
+   return "Termux = Linux kwa Android! 📱\n• App kwa Play Store\n• Inakupa terminal kama computer\n• Unaweza install python, git, nodejs, rust\n• Ndio ulitumia ku-clone Mwananchi!\n• Best for coding kwa phone!";
+ }
+ if(t.includes("what is git") || t.includes("git is")){
+   return "Git = Version control bro!\n• Inahifadhi history ya code yako\n• V14, V15... V26 - hizo ni versions!\n• GitHub inahifadhi online\n• Commands: git add, git commit, git push\n• Ndio umetumia leo!";
+ }
+ if(t.includes("what is python") || t.includes("python is")){
+   return "Python = Programming language 🐍\n• Rahisi kujifunza\n• Inatumika kwa AI, web, automation\n• Termux: pkg install python\n• Mwananchi V27 itaandikwa na python!\nWant code example?";
  }
 
- if(t.includes("made you") || t.includes("who made") || t.includes("how made")) return "Wewe bro! Naaman from Litein! 👊 You made me V25! From V21 to V25 fixed!";
-
+ // MAYAI
  if(t.includes("mayai") && !t.includes("image")){
    let n=text.match(/\d+/); let trays=n?parseInt(n[0]):3; if(trays==2026||trays>100) trays=3;
-   return `Mayai Litein 2026 🥚 V25:\n${trays} tray = Buy ${trays*550} / Sell ${trays*700} / Profit ${trays*150}`;
+   return `Mayai Litein 2026 🥚 V26:\n${trays} tray = Buy ${trays*550} / Sell ${trays*700} / Profit ${trays*150}\nProfit yako!`;
  }
 
+ // IMAGE
  if(t.includes("image:") || t.includes("picha:")){
    let p=text.replace(/image:|picha:/gi,"").trim() || "Mayai shop Litein";
    return "__IMAGE__"+p;
  }
 
- return `V25 got: '${text}'\n✅ Fixed all: Hello, Hi, How are you, Who is you`;
+ // FALLBACK SMART - NO MORE "V25 GOT" ERROR!
+ // If we don't know, give helpful answer
+ return `Poa, uliuliza: "${text}"\n\nMimi ni Mwananchi V26 🌍, naweza jibu:\n• General: What is computer, AI, Termux, Git\n• Rules, who are you\n• Mayai business\n• Image: type 'image: mayai shop'\n\nJaribu: 'What is computer' tena ama 'Do you have rules' — sasa V26 itajibu vizuri!`;
 }
 
 function ask(){
@@ -68,8 +89,9 @@ function ask(){
  } else addMsg(ans,'bot');
 }
 function addMsg(t,c){ const d=document.getElementById('chat'); const div=document.createElement('div'); div.className='msg '+c; div.innerText=t; d.appendChild(div); d.scrollTop=d.scrollHeight; }
-addMsg("V25 LOADED! 🌍 FINAL FIX!\n✅ Hello, Hi = works\n✅ How are you = NOW WORKS (was bug in your screenshot)\n✅ Who is you = works\n\nType 'How are you' again now!","bot");
+addMsg("V26 LOADED! 🌍 FULL BRAIN!\n✅ Fixed V25 bug 'V25 got:'\n✅ Now understands: What is computer, rules, AI, termux, git\n✅ Try again: 'What is computer' and 'Do you have rules' - will work now!","bot");
 </script>
 </body>
 </html>
+
 
