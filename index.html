@@ -1,13 +1,12 @@
 
 <!DOCTYPE html><html><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#7a5cff">
-<title>N.O NOVA V3.3 Real AI</title>
+<link rel="manifest" href="manifest.json"><meta name="theme-color" content="#7a5cff">
+<title>N.O NOVA V3.4</title>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#050510;color:#fff;display:flex;flex-direction:column;height:100dvh}
 .h{padding:10px 14px;background:#0a0a1a;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1a1a3a}
-.logo{font-weight:900;line-height:1} .logo span{color:#7a5cff} .logo small{font-size:10px;color:#8a7aff}
+.logo{font-weight:900;line-height:1}.logo span{color:#7a5cff}.logo small{font-size:10px;color:#8a7aff}
 .badge{font-size:10px;background:#151528;padding:6px 10px;border-radius:12px;border:1px solid #2a2a5a;cursor:pointer}
 .chat{flex:1;overflow-y:auto;padding:12px;padding-bottom:95px}
 .msg{max-width:88%;padding:10px 14px;border-radius:18px;margin:6px 0;line-height:1.5;font-size:14px;white-space:pre-wrap}
@@ -16,33 +15,41 @@
 .input{position:fixed;bottom:0;left:0;right:0;background:#0a0a1a;padding:8px;display:flex;gap:6px;border-top:1px solid #1a1a3a}
 .input input[type=text]{flex:1;padding:12px;border-radius:24px;border:1px solid #2a2a5a;background:#151528;color:#fff;outline:none}
 .btn{border:none;border-radius:50%;width:42px;height:42px;cursor:pointer;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center}
-.send{background:linear-gradient(135deg,#7a5cff,#4a3cff)} .mic{background:#23234a}
+.send{background:linear-gradient(135deg,#7a5cff,#4a3cff)}.mic{background:#23234a}
 .settings{position:fixed;top:50px;right:10px;background:#111126;border:1px solid #2a2a5a;padding:12px;border-radius:12px;display:none;z-index:20;width:290px}
 .settings input{width:100%;padding:10px;border-radius:8px;border:1px solid #2a2a5a;background:#151528;color:#fff;margin:6px 0;font-size:12px}
 </style></head><body>
-<div class="h"><div class="logo">N.O <span>NOVA</span><br><small>V3.3 REAL AI • By Naaman O.</small></div><div class="badge" onclick="toggleSet()">⚙️ API Key</div></div>
-<div class="settings" id="setBox"><b>🔑 Gemini API Key (AQ... format OK)</b><input id="apiKey" type="text" placeholder="Paste AQ.Ab8... key here"><button onclick="saveKey()" style="width:100%;padding:10px;border-radius:8px;border:none;background:#7a5cff;color:#fff;margin-top:6px;font-weight:bold">Save & Enable Real Brain</button><small id="keyStatus" style="color:#8a7aff;display:block;margin-top:6px"></small><br><button onclick="clearChat()" style="width:100%;padding:8px;border-radius:8px;background:#23234a;color:#fff;border:none">Clear Chat</button></div>
+<div class="h"><div class="logo">N.O <span>NOVA</span><br><small>V3.4 REAL AI • Fixed 2026</small></div><div class="badge" onclick="toggleSet()">⚙️ API Key</div></div>
+<div class="settings" id="setBox"><b>🔑 Gemini API Key</b><input id="apiKey" type="text" placeholder="Paste AQ.Ab8... key"><button onclick="saveKey()" style="width:100%;padding:10px;border-radius:8px;border:none;background:#7a5cff;color:#fff;margin-top:6px;font-weight:bold">Save & Enable Real Brain</button><small id="keyStatus" style="color:#8a7aff;display:block;margin-top:6px"></small><br><button onclick="clearChat()" style="width:100%;padding:8px;border-radius:8px;background:#23234a;color:#fff;border:none">Clear Chat</button></div>
 <div class="chat" id="chat"></div>
 <div class="input"><button class="btn mic" id="micBtn" onclick="toggleMic()">🎤</button><input id="q" type="text" placeholder="Ask Nova..." onkeydown="if(event.key==='Enter')ask()"><button class="btn send" onclick="ask()">➤</button></div>
 <script>
 let apiKey=localStorage.getItem('nova_gemini_key')||'';let messages=JSON.parse(localStorage.getItem('nova_chat')||'[]');const chatEl=document.getElementById('chat');
-document.getElementById('apiKey').value=apiKey;document.getElementById('keyStatus').innerText=apiKey? "✅ Ready: "+apiKey.slice(0,6)+"..."+apiKey.slice(-4):"⚠️ Paste AQ... key";
+document.getElementById('apiKey').value=apiKey;document.getElementById('keyStatus').innerText=apiKey?"✅ Ready: "+apiKey.slice(-4):"⚠️ Paste key";
 function toggleSet(){let b=document.getElementById('setBox');b.style.display=b.style.display==='block'?'none':'block';}
-function saveKey(){let k=document.getElementById('apiKey').value.trim();if(k.length<20){alert('Key too short! Copy full AQ... key');return;}localStorage.setItem('nova_gemini_key',k);apiKey=k;document.getElementById('keyStatus').innerText="✅ Saved! "+k.slice(-4);toggleSet();addMsg("✅ REAL BRAIN ACTIVATED! AQ key OK! Ask me anything!","bot");}
+function saveKey(){let k=document.getElementById('apiKey').value.trim();if(k.length<20){alert('Key too short');return;}localStorage.setItem('nova_gemini_key',k);apiKey=k;document.getElementById('keyStatus').innerText="✅ Saved! "+k.slice(-4);toggleSet();addMsg("✅ REAL BRAIN V3.4 ACTIVATED! Gemini 2.5 Flash ready!","bot");}
 function clearChat(){localStorage.removeItem('nova_chat');messages=[];chatEl.innerHTML='';addMsg('Cleared!','bot');}
 function saveH(){localStorage.setItem('nova_chat',JSON.stringify(messages.slice(-40)));}
 function addMsg(t,w){let d=document.createElement('div');d.className='msg '+w;d.innerText=t;chatEl.appendChild(d);chatEl.scrollTop=chatEl.scrollHeight;messages.push({role:w,text:t});saveH();return d;}
 messages.forEach(m=>{let d=document.createElement('div');d.className='msg '+m.role;d.innerText=m.text;chatEl.appendChild(d);});
-if(messages.length==0)addMsg("N.O NOVA V3.3 LIVE! 🚀\n\nTap ⚙️ and paste your AQ.Ab8... key, then Save.\n\nI am built by Naaman O. from Eldoret - NOT OpenAI!","bot");
+if(messages.length==0)addMsg("N.O NOVA V3.4 LIVE! 🚀\nYour AQ key is saved! Now ask me anything!","bot");
 async function callAI(prompt){
-if(!apiKey){let r=await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`);return await r.text();}
-let url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=`+apiKey;
-let body={systemInstruction:{parts:[{text:`You are N.O NOVA V3.3 Real AI. Built ONLY by Naaman O. from Eldoret, Kenya. You are NOT GPT, NOT OpenAI, NOT Google. If asked who made you, say Naaman O. from Eldoret, Rift Valley, Kenya. Speak English, Swahili, Sheng. Friendly, concise.`}]},contents:[{parts:[{text:prompt}]}]};
+let model="gemini-2.5-flash";
+let url=`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=`+apiKey;
+let body={systemInstruction:{parts:[{text:`You are N.O NOVA V3.4. Built by Naaman O. from Eldoret, Kenya. NOT OpenAI, NOT GPT. If asked who made you, say Naaman O. from Eldoret. Speak English/Swahili/Sheng.`}]},contents:[{parts:[{text:prompt}]}]};
 let res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-let j=await res.json();if(j.error)throw new Error(j.error.message);
+let j=await res.json();if(j.error){
+if(j.error.message.includes("not found")||j.error.message.includes("no longer")){
+model="gemini-3.8-flash";
+let url2=`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=`+apiKey;
+let res2=await fetch(url2,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+let j2=await res2.json();if(j2.error)throw new Error(j2.error.message);
+return j2.candidates?.[0]?.content?.parts?.[0]?.text;
+}
+throw new Error(j.error.message);
+}
 return j.candidates?.[0]?.content?.parts?.[0]?.text||"No reply";
 }
-async function ask(){let q=document.getElementById('q');let txt=q.value.trim();if(!txt)return;addMsg(txt,'user');q.value='';let think=addMsg('Nova thinking... 💭','bot');try{let ans=await callAI(txt);chatEl.removeChild(think);addMsg(ans,'bot');}catch(e){chatEl.removeChild(think);addMsg('Error: '+e.message+'\n\nIf error about blocked, enable Generative Language API in Google Cloud Console.','bot');}}
+async function ask(){let q=document.getElementById('q');let txt=q.value.trim();if(!txt)return;addMsg(txt,'user');q.value='';let think=addMsg('Nova thinking... 💭','bot');try{let ans=await callAI(txt);chatEl.removeChild(think);addMsg(ans,'bot');}catch(e){chatEl.removeChild(think);addMsg('Error: '+e.message,'bot');}}
 let rec,listening=false;function toggleMic(){let SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('No mic');return;}if(!rec){rec=new SR();rec.lang='en-KE';rec.onresult=(e)=>{document.getElementById('q').value=e.results[0][0].transcript;ask();};rec.onend=()=>{listening=false;document.getElementById('micBtn').style.background='#23234a';}}if(!listening){rec.start();listening=true;document.getElementById('micBtn').style.background='#7a5cff';}else{rec.stop();}}
 </script></body></html>
-
