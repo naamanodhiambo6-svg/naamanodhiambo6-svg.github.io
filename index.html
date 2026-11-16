@@ -53,3 +53,4 @@ return j.candidates?.[0]?.content?.parts?.[0]?.text||"No reply";
 async function ask(){let q=document.getElementById('q');let txt=q.value.trim();if(!txt)return;addMsg(txt,'user');q.value='';let think=addMsg('Nova thinking... 💭','bot');try{let ans=await callAI(txt);chatEl.removeChild(think);addMsg(ans,'bot');}catch(e){chatEl.removeChild(think);addMsg('Error: '+e.message,'bot');}}
 let rec,listening=false;function toggleMic(){let SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert('No mic');return;}if(!rec){rec=new SR();rec.lang='en-KE';rec.onresult=(e)=>{document.getElementById('q').value=e.results[0][0].transcript;ask();};rec.onend=()=>{listening=false;document.getElementById('micBtn').style.background='#23234a';}}if(!listening){rec.start();listening=true;document.getElementById('micBtn').style.background='#7a5cff';}else{rec.stop();}}
 </script></body></html>
+
